@@ -442,13 +442,13 @@
     if (!document.querySelector('link[data-stories-editor-css]')) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = "/qarip/stories-editor.css?v=leto14";
+      link.href = "/qarip/stories-editor.css?v=leto15";
       link.dataset.storiesEditorCss = "1";
       document.head.appendChild(link);
     }
     if (!document.querySelector('script[data-stories-editor]')) {
       const script = document.createElement("script");
-      script.src = "/qarip/stories-editor.js?v=leto14";
+      script.src = "/qarip/stories-editor.js?v=leto15";
       script.defer = true;
       script.dataset.storiesEditor = "1";
       document.body.appendChild(script);
@@ -490,13 +490,14 @@
     polishNav();
     if (isStoriesPage()) {
       polishGeneratorCopy();
-      ensureStoriesHero();
+      // Do not inject stories-page-hero — it only causes FOUC; Leto choice is the entry UI.
       ensureStoriesEditorAssets();
     } else {
       polishHomeHero();
       ensureLanding();
       polishCatalog();
       setMeta(HOME_TITLE, HOME_DESC, "https://aqsuek.kz/qarip/");
+      document.documentElement.classList.add("qarip-booted");
     }
     polishAboutFooter();
   }
@@ -530,5 +531,11 @@
   markPage();
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", watch);
   else watch();
-  window.addEventListener("load", () => setTimeout(apply, 80));
+  window.addEventListener("load", () => {
+    setTimeout(apply, 80);
+    // Safety: never leave the home boot cover stuck if apply is delayed.
+    setTimeout(() => {
+      if (!isStoriesPage()) document.documentElement.classList.add("qarip-booted");
+    }, 3000);
+  });
 })();
