@@ -442,13 +442,13 @@
     if (!document.querySelector('link[data-stories-editor-css]')) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = "/qarip/stories-editor.css?v=leto13";
+      link.href = "/qarip/stories-editor.css?v=leto14";
       link.dataset.storiesEditorCss = "1";
       document.head.appendChild(link);
     }
     if (!document.querySelector('script[data-stories-editor]')) {
       const script = document.createElement("script");
-      script.src = "/qarip/stories-editor.js?v=leto13";
+      script.src = "/qarip/stories-editor.js?v=leto14";
       script.defer = true;
       script.dataset.storiesEditor = "1";
       document.body.appendChild(script);

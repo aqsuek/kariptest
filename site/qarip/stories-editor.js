@@ -4,7 +4,7 @@
   const STORE = "qarip-stories-editor-v2";
   const FAV_FONTS = "qarip-stories-font-favs";
   const FAV_PAIRS = "qarip-stories-combo-favs";
-  const ASSET_V = "leto13";
+  const ASSET_V = "leto14";
 
   let FONT_DATA = null;
   let fontDataPromise = null;
@@ -1437,11 +1437,15 @@
 
   function ensureChoice() {
     let choice = qs(".leto-choice");
-    if (choice) return choice;
+    if (choice) {
+      markLetoReady();
+      return choice;
+    }
     choice = document.createElement("div");
     choice.className = "leto-choice";
     document.body.append(choice);
     choice.innerHTML = renderChoiceHome();
+    markLetoReady();
     choice.addEventListener("click", (e) => {
       if (e.target.closest("[data-choice-back]")) {
         location.href = "/qarip/";
@@ -1467,6 +1471,10 @@
     return choice;
   }
 
+  function markLetoReady() {
+    document.documentElement.classList.add("leto-ready");
+  }
+
   function boot() {
     ensureStyleLink();
     const nodes = ensureShell();
@@ -1476,6 +1484,7 @@
     applyAll();
     if (!history.length) pushHistory();
     ensureChoice();
+    markLetoReady();
     loadFontData().then(() => {
       if (activeSheet === "fonts") renderSheet("fonts");
     });
