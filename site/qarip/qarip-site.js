@@ -484,32 +484,73 @@
     slogan.textContent = "Жақсы Stories — жарқын күндерге! ♡";
   }
 
+  function isHomePolished() {
+    return !!(
+      document.querySelector(".intro.qarip-hero .qarip-hero-visual") &&
+      document.querySelector(".qarip-landing[data-ready]") &&
+      document.querySelector(".topbar .qarip-nav-actions")
+    );
+  }
+
+  function syncHomeBoot() {
+    if (isStoriesPage()) return;
+    if (isHomePolished()) document.documentElement.classList.add("qarip-booted");
+    else document.documentElement.classList.remove("qarip-booted");
+  }
+
+  function demoteLegacyCss() {
+    document
+      .querySelectorAll('link[href*="_next/static/css"], link[data-rsc-css-href]')
+      .forEach((link) => {
+        if (link.getAttribute("media") !== "print") link.setAttribute("media", "print");
+      });
+  }
+
+  let applying = false;
+
   function apply() {
-    if (redirectLegacy()) return;
-    markPage();
-    polishNav();
-    if (isStoriesPage()) {
-      polishGeneratorCopy();
-      // Do not inject stories-page-hero — it only causes FOUC; Leto choice is the entry UI.
-      ensureStoriesEditorAssets();
-    } else {
-      polishHomeHero();
-      ensureLanding();
-      polishCatalog();
-      setMeta(HOME_TITLE, HOME_DESC, "https://aqsuek.kz/qarip/");
-      document.documentElement.classList.add("qarip-booted");
+    if (applying) return;
+    applying = true;
+    try {
+      if (redirectLegacy()) return;
+      demoteLegacyCss();
+      markPage();
+      polishNav();
+      if (isStoriesPage()) {
+        polishGeneratorCopy();
+        // Do not inject stories-page-hero — it only causes FOUC; Leto choice is the entry UI.
+        ensureStoriesEditorAssets();
+      } else {
+        polishHomeHero();
+        ensureLanding();
+        polishCatalog();
+        setMeta(HOME_TITLE, HOME_DESC, "https://aqsuek.kz/qarip/");
+      }
+      polishAboutFooter();
+      syncHomeBoot();
+    } finally {
+      queueMicrotask(() => {
+        applying = false;
+      });
     }
-    polishAboutFooter();
+  }
+
+  function scheduleApply() {
+    demoteLegacyCss();
+    if (!isStoriesPage() && !isHomePolished()) {
+      document.documentElement.classList.remove("qarip-booted");
+      apply();
+      return;
+    }
+    clearTimeout(timer);
+    timer = setTimeout(apply, 40);
   }
 
   function watch() {
     apply();
     const topbar = document.querySelector(".topbar");
     if (topbar) {
-      new MutationObserver(() => {
-        clearTimeout(timer);
-        timer = setTimeout(apply, 40);
-      }).observe(topbar, { childList: true, subtree: true });
+      new MutationObserver(scheduleApply).observe(topbar, { childList: true, subtree: true });
     }
     if (isStoriesPage()) {
       new MutationObserver(() => {
@@ -518,24 +559,29 @@
     }
     const main = document.querySelector("main");
     if (main) {
-      new MutationObserver(() => {
-        clearTimeout(timer);
-        timer = setTimeout(apply, 40);
-      }).observe(main, { childList: true });
+      new MutationObserver(scheduleApply).observe(main, { childList: true, subtree: true });
     }
+    new MutationObserver(demoteLegacyCss).observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+    });
   }
 
   window.QaripSite = { isStoriesPage, apply, fontCount };
 
   if (redirectLegacy()) return;
+  demoteLegacyCss();
   markPage();
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", watch);
   else watch();
   window.addEventListener("load", () => {
     setTimeout(apply, 80);
-    // Safety: never leave the home boot cover stuck if apply is delayed.
+    setTimeout(apply, 400);
+    // Only lift cover if polish markers exist — never reveal raw SPA intro.
     setTimeout(() => {
-      if (!isStoriesPage()) document.documentElement.classList.add("qarip-booted");
-    }, 3000);
+      if (!isStoriesPage() && isHomePolished()) {
+        document.documentElement.classList.add("qarip-booted");
+      }
+    }, 5000);
   });
 })();
