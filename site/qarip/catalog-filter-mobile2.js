@@ -7,7 +7,8 @@
   let mode = "all";
   let style = ALL;
   let licenseMode = "all";
-  let fontIndex = new Map();
+  let localIndex = new Map();
+  let googleIndex = new Map();
 
   const styleSheet = document.createElement("style");
   styleSheet.textContent =
@@ -23,9 +24,27 @@
     return file.replace(/\.[a-z0-9]+$/i, "").toLowerCase().replace(/[^a-z0-9]+/g, "-") || "font";
   }
 
+  function isGoogleCard(card) {
+    return [...card.querySelectorAll("a")].some((a) => /fonts\.google\.com/.test(a.getAttribute("href") || ""));
+  }
+
   function recordFor(card) {
     const name = (card.querySelector("h3")?.textContent || "").trim();
-    return fontIndex.get(name) || null;
+    if (isGoogleCard(card)) return googleIndex.get(name) || null;
+    return localIndex.get(name) || null;
+  }
+
+  function pruneDroppedCards() {
+    if (localIndex.size + googleIndex.size < 50) return 0;
+    const grid = document.querySelector(".font-grid");
+    if (!grid) return 0;
+    let n = 0;
+    grid.querySelectorAll(":scope > .font-card").forEach((card) => {
+      if (recordFor(card)) return;
+      card.remove();
+      n += 1;
+    });
+    return n;
   }
 
   function ensureFiltersUi() {
@@ -251,14 +270,18 @@
     const seen = new Set();
     cards.forEach((card) => {
       const name = Q?.cleanText(card.querySelector("h3")?.textContent) || card.querySelector("h3")?.textContent?.trim();
-      if (!name || seen.has(name)) return;
-      seen.add(name);
-      const rec = fontIndex.get(name);
-      const category = rec?.style || card.querySelector(".meta > span")?.textContent?.trim();
-      if (category) {
-        card.dataset.style = category;
-        categoryTotals.set(category, (categoryTotals.get(category) || 0) + 1);
+      if (!name) return;
+      const rec = recordFor(card);
+      const uniq = `${isGoogleCard(card) ? "g" : "l"}:${name}`;
+      if (!seen.has(uniq)) {
+        seen.add(uniq);
+        const category = rec?.style || card.querySelector(".meta > span")?.textContent?.trim();
+        if (category) {
+          categoryTotals.set(category, (categoryTotals.get(category) || 0) + 1);
+        }
       }
+      const category = rec?.style || card.querySelector(".meta > span")?.textContent?.trim();
+      if (category) card.dataset.style = category;
       const makerEl = card.querySelector(".card-top p");
       const author = rec ? rec.author : Q?.displayAuthor(makerEl?.textContent);
       if (makerEl) {
@@ -275,9 +298,19 @@
         }
         if (index > 0) return;
       });
-      const licenseKey = rec?.license || "check";
+      const licenseKey = rec?.license || (isGoogleCard(card) ? "open" : "check");
       card.dataset.license = licenseKey;
       card.dataset.slug = rec?.slug || slugify(name, rec?.download);
+      card.dataset.source = rec?.source || (isGoogleCard(card) ? "google" : "local");
+      const h3 = card.querySelector("h3");
+      if (h3 && card.dataset.slug && !h3.querySelector("a")) {
+        const label = h3.textContent;
+        h3.replaceChildren();
+        const link = document.createElement("a");
+        link.href = `/qarip/font/${card.dataset.slug}/`;
+        link.textContent = label;
+        h3.append(link);
+      }
       if (rec?.category) card.dataset.category = rec.category;
       if (rec?.useCase) card.dataset.usecase = rec.useCase;
       if (Array.isArray(rec?.tags)) card.dataset.tags = rec.tags.join(" ");
@@ -303,8 +336,10 @@
       let total = 0;
       if (category === ALL) total = seen.size;
       else if (category === STORIES_GROUP) {
-        seen.forEach((name) => {
-          if (fontIndex.get(name)?.useCase === "stories") total += 1;
+        seen.forEach((key) => {
+          const nm = key.slice(2);
+          const rec = key.startsWith("g:") ? googleIndex.get(nm) : localIndex.get(nm);
+          if (rec?.useCase === "stories") total += 1;
         });
       } else total = categoryTotals.get(category) || 0;
       let count = button.querySelector("small");
@@ -436,7 +471,7 @@
   );
 
   document.addEventListener("click", (event) => {
-    const download = event.target.closest(".card-bottom a[download], .card-bottom a[aria-label$='жүктеу'], a.font-download");
+    const download = event.target.closest(".card-bottom a[download], .card-bottom a[aria-label$='жүктеу'], a.font-download, .card-bottom a[href*='fonts.google.com']");
     if (download && window.Qarip) {
       const card = download.closest(".font-card") || download.closest(".font-detail");
       const href = download.getAttribute("href") || card?.dataset.download || "";
@@ -444,10 +479,9 @@
       const license = card?.dataset.license || "check";
       if (window.Qarip.handleDownloadClick(event, license, href, filename)) return;
     }
-    const heading = event.target.closest(".font-card h3");
-    if (heading && !event.target.closest("a,button")) {
-      const card = heading.closest(".font-card");
-      const slug = card?.dataset.slug;
+    const card = event.target.closest(".font-card");
+    if (card && !event.target.closest("a,button,.font-favorite")) {
+      const slug = card.dataset.slug;
       if (slug) {
         event.preventDefault();
         location.href = `/qarip/font/${slug}/`;
@@ -531,12 +565,14 @@
   }
 
   async function loadFontIndex() {
-    if (fontIndex.size) return;
+    if (localIndex.size || googleIndex.size) return;
     try {
       const res = await fetch("/qarip/data/fonts.json", { cache: "no-store" });
       const rows = await res.json();
       (Array.isArray(rows) ? rows : []).forEach((row) => {
-        if (row?.name) fontIndex.set(row.name, row);
+        if (!row?.name) return;
+        if (row.source === "google") googleIndex.set(row.name, row);
+        else localIndex.set(row.name, row);
       });
     } catch {}
   }
@@ -551,6 +587,7 @@
     if (!grid || grid.dataset.filterObserved === "1") return;
     grid.dataset.filterObserved = "1";
     loadFontIndex().then(() => {
+      pruneDroppedCards();
       decorateCatalog(grid.querySelectorAll(":scope > .font-card"));
       addFavorites(grid.querySelectorAll(":scope > .font-card"));
       stripStickers(grid.querySelectorAll(":scope > .font-card"));
@@ -567,6 +604,7 @@
     new MutationObserver(() => {
       clearTimeout(timer);
         timer = setTimeout(() => {
+          pruneDroppedCards();
           decorateCatalog(grid.querySelectorAll(":scope > .font-card"));
           addFavorites(grid.querySelectorAll(":scope > .font-card"));
           stripStickers(grid.querySelectorAll(":scope > .font-card"));
@@ -601,6 +639,7 @@
       }
       const grid = document.querySelector(".font-grid");
       if (!grid) return;
+      pruneDroppedCards();
       const cards = grid.querySelectorAll(":scope > .font-card");
       decorateCatalog(cards);
       addFavorites(cards);

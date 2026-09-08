@@ -4,7 +4,7 @@
   const STORE = "qarip-stories-editor-v2";
   const FAV_FONTS = "qarip-stories-font-favs";
   const FAV_PAIRS = "qarip-stories-combo-favs";
-  const ASSET_V = "leto15";
+  const ASSET_V = "leto18";
 
   let FONT_DATA = null;
   let fontDataPromise = null;
@@ -46,12 +46,19 @@
     return p;
   }
 
+  function loadPreviewFont(family, url) {
+    const fam = decodeURIComponent(family || "");
+    const src = url || "";
+    if (src.startsWith("google:")) return ensureGoogleFont(src.slice(7) || fam);
+    if (src) return ensureFontFace(fam, src);
+    return Promise.resolve();
+  }
+
   let fontCardObserver = null;
   function observeFontCards(container) {
+    const run = (btn) => loadPreviewFont(btn.dataset.fontFamily || "", btn.dataset.fontUrl);
     if (typeof IntersectionObserver === "undefined") {
-      qsa(".leto-font-grid button[data-font-url]", container).forEach((btn) =>
-        ensureFontFace(decodeURIComponent(btn.dataset.fontFamily || ""), btn.dataset.fontUrl)
-      );
+      qsa(".leto-font-grid button[data-font-url]", container).forEach(run);
       return;
     }
     if (fontCardObserver) fontCardObserver.disconnect();
@@ -59,9 +66,8 @@
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const btn = entry.target;
-          ensureFontFace(decodeURIComponent(btn.dataset.fontFamily || ""), btn.dataset.fontUrl);
-          fontCardObserver.unobserve(btn);
+          run(entry.target);
+          fontCardObserver.unobserve(entry.target);
         });
       },
       { root: container, rootMargin: "300px 0px" }
@@ -102,8 +108,8 @@
     { name: "Oswald × Onest", group: "Bold", sampleA: "BOLD", sampleB: "қысқа сөз" },
     { name: "Yeseva × Manrope", group: "Beauty", sampleA: "Stylish", sampleB: "soft & clean" },
     { name: "Cormorant × Gotham", group: "Minimal", sampleA: "Minimal", sampleB: "тыныш дизайн" },
-    { name: "Russo × Inter", group: "Business", sampleA: "WORK", sampleB: "business tone" },
-    { name: "Unbounded × Oswald", group: "Travel", sampleA: "GO", sampleB: "travel mood" },
+    { name: "Rubik × Inter", group: "Business", sampleA: "WORK", sampleB: "business tone" },
+    { name: "Forum × Oswald", group: "Travel", sampleA: "GO", sampleB: "travel mood" },
   ];
   const STICKERS = ["✨", "♡", "★", "🔥", "✦", "✿", "●", "▲", "■", "♪", "✧", "❖"];
   const LAYOUTS = {
@@ -475,9 +481,13 @@
       const preview = card.querySelector(".font-preview");
       const family = preview?.style.fontFamily || "";
       const style = (card.querySelector(".meta")?.textContent || "").toLowerCase();
-      if (!name || !family || seen.has(name)) return;
-      seen.add(name);
-      fonts.push({ name, family, cat: fontCategoryOf(style, "") });
+      if (!name || !family || seen.has(name + family)) return;
+      seen.add(name + family);
+      const rec = (FONT_DATA || []).find((f) => f.name === name && (card.querySelector("a[href*='fonts.google.com']") ? f.source === "google" : f.source !== "google"));
+      const fallback = (FONT_DATA || []).find((f) => f.name === name);
+      const row = rec || fallback;
+      const url = row?.preview || "";
+      fonts.push({ name, family, cat: fontCategoryOf(style, row?.category || ""), url });
     });
     // fallback from pair families if catalog hidden empty
     if (!fonts.length) {
@@ -874,7 +884,7 @@
       }
       const fontBtn = e.target.closest("[data-font-name]");
       if (fontBtn && !e.target.closest("[data-fav-font]")) {
-        applyFont(decodeURIComponent(fontBtn.dataset.fontFamily), fontBtn.dataset.fontName);
+        applyFont(decodeURIComponent(fontBtn.dataset.fontFamily), fontBtn.dataset.fontName, fontBtn.dataset.fontUrl);
         closeSheets();
         return;
       }
@@ -1125,20 +1135,51 @@
     save();
   }
 
-  function applyFont(family, name) {
-    // Prefer existing font pick UI
-    const item = qsa(".reels-font-item").find((el) => el.dataset.name === name);
-    if (item) {
-      item.click();
+  function ensureGoogleFont(family) {
+    const fam = String(family || "").replace(/^["']|["']$/g, "").split(",")[0].trim();
+    if (!fam) return Promise.resolve();
+    const id = `qarip-gf-${fam.replace(/\s+/g, "-")}`;
+    if (!document.getElementById(id)) {
+      const link = document.createElement("link");
+      link.id = id;
+      link.rel = "stylesheet";
+      link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fam)}:ital,wght@0,400;0,700;1,400&display=swap`;
+      document.head.appendChild(link);
+    }
+    return document.fonts?.load ? document.fonts.load(`24px "${fam}"`) : Promise.resolve();
+  }
+
+  function applyFont(family, name, url) {
+    const rec = (FONT_DATA || []).find((f) => f.name === name);
+    const src = url || rec?.preview || "";
+    const fam = String(family || "").replace(/^["']|["']$/g, "").split(",")[0].trim();
+    const paint = () => {
+      const item = qsa(".reels-font-item").find((el) => el.dataset.name === name);
+      if (item) {
+        item.click();
+        return;
+      }
+      const stack = qs(".subtitle-stack");
+      const selected =
+        stack?.querySelector('[data-selected="1"]') ||
+        stack?.querySelector(".sub-hook");
+      if (selected) {
+        selected.style.setProperty("font-family", `"${fam}"`, "important");
+      }
+    };
+    if (src.startsWith("google:")) {
+      ensureGoogleFont(src.slice(7) || fam).then(paint);
       return;
     }
-    const stack = qs(".subtitle-stack");
-    const selected =
-      stack?.querySelector('[data-selected="1"]') ||
-      stack?.querySelector(".sub-hook");
-    if (selected) {
-      selected.style.setProperty("font-family", family, "important");
+    if (src && !src.startsWith("http")) {
+      ensureFontFace(fam, src).then(paint);
+      return;
     }
+    if (src.startsWith("https://fonts.googleapis.com")) {
+      ensureGoogleFont(fam).then(paint);
+      return;
+    }
+    paint();
   }
 
   function ensureBg(preview) {
@@ -1307,7 +1348,7 @@
     if (window.html2canvas) return window.html2canvas;
     await new Promise((resolve, reject) => {
       const s = document.createElement("script");
-      s.src = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
+      s.src = "/qarip/vendor/html2canvas.min.js";
       s.onload = resolve;
       s.onerror = reject;
       document.head.appendChild(s);
@@ -1475,7 +1516,26 @@
     document.documentElement.classList.add("leto-ready");
   }
 
+  function syncLegacyPairButtons() {
+    const rewrites = [
+      {
+        needle: "Unbounded",
+        html: '<span>07</span><b><i style="font-family:&quot;Forum&quot;, serif">Forum</i> × <em style="font-family:&quot;Oswald&quot;, sans-serif;font-weight:700">Oswald</em></b>',
+      },
+      {
+        needle: "Russo",
+        html: '<span>06</span><b><i style="font-family:&quot;Rubik&quot;, sans-serif;font-weight:700">Rubik</i> × <em style="font-family:&quot;Inter&quot;, sans-serif;font-weight:800">Inter</em></b>',
+      },
+    ];
+    qsa(".reels-options:not(.reels-colors) > button").forEach((btn) => {
+      const text = btn.textContent || "";
+      const hit = rewrites.find((r) => text.includes(r.needle));
+      if (hit) btn.innerHTML = hit.html;
+    });
+  }
+
   function boot() {
+    syncLegacyPairButtons();
     ensureStyleLink();
     const nodes = ensureShell();
     if (!nodes?.preview) return;

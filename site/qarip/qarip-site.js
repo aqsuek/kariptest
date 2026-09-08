@@ -442,13 +442,13 @@
     if (!document.querySelector('link[data-stories-editor-css]')) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = "/qarip/stories-editor.css?v=leto15";
+      link.href = "/qarip/stories-editor.css?v=leto18";
       link.dataset.storiesEditorCss = "1";
       document.head.appendChild(link);
     }
     if (!document.querySelector('script[data-stories-editor]')) {
       const script = document.createElement("script");
-      script.src = "/qarip/stories-editor.js?v=leto15";
+      script.src = "/qarip/stories-editor.js?v=leto18";
       script.defer = true;
       script.dataset.storiesEditor = "1";
       document.body.appendChild(script);
@@ -518,8 +518,8 @@
       polishNav();
       if (isStoriesPage()) {
         polishGeneratorCopy();
-        // Do not inject stories-page-hero — it only causes FOUC; Leto choice is the entry UI.
         ensureStoriesEditorAssets();
+        setMeta(STORIES_TITLE, STORIES_DESC, "https://aqsuek.kz/qarip/stories/");
       } else {
         polishHomeHero();
         ensureLanding();

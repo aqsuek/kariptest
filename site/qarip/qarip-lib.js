@@ -66,10 +66,17 @@
     return LICENSE[key] || LICENSE.check;
   }
 
-  function measureGlyph(ctx, ch, tofu) {
-    const width = ctx.measureText(ch).width;
-    if (width <= 0) return false;
-    return tofu.every((t) => Math.abs(width - t) >= 0.6);
+  function glyphInk(ctx, fam, ch) {
+    ctx.clearRect(0, 0, 96, 96);
+    ctx.fillStyle = "#000";
+    ctx.font = `72px ${fam}`;
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    ctx.fillText(ch, 48, 52);
+    const data = ctx.getImageData(0, 0, 96, 96).data;
+    let n = 0;
+    for (let i = 3; i < data.length; i += 4) if (data[i] > 12) n += 1;
+    return n;
   }
 
   function kazakhGlyphReport(family) {
@@ -78,15 +85,19 @@
       return { status: "none", missing: KZ_GLYPHS.slice(), loaded: false };
     }
     const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+    canvas.width = 96;
+    canvas.height = 96;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) {
       return { status: "none", missing: KZ_GLYPHS.slice(), loaded: false };
     }
-    ctx.font = `72px "${fontFamily}"`;
-    const tofu = [ctx.measureText("\uFFFF").width, ctx.measureText("\uFFFE").width];
+    const stack = `"${fontFamily}"`;
+    const notdef = Math.max(glyphInk(ctx, stack, "\uFFFD"), glyphInk(ctx, stack, "\uFFFF"), glyphInk(ctx, stack, "\uFFFE"));
     const missing = [];
     KZ_GLYPHS.forEach((ch) => {
-      if (!measureGlyph(ctx, ch, tofu)) missing.push(ch);
+      const a = glyphInk(ctx, stack, ch);
+      if (a < 10) missing.push(ch);
+      else if (notdef >= 10 && Math.abs(a - notdef) <= 8) missing.push(ch);
     });
     if (missing.length === 0) return { status: "full", missing, loaded: true };
     if (missing.length >= KZ_GLYPHS.length) return { status: "none", missing, loaded: true };
@@ -122,10 +133,37 @@
 
   const loadedFamilies = new Set();
 
+  function googleCssUrl(family) {
+    return `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family)}:ital,wght@0,400;0,700;1,400&display=swap`;
+  }
+
+  function ensureGoogleCss(family) {
+    const fam = cleanText(family).replace(/^["']|["']$/g, "");
+    if (!fam) return;
+    const id = `qarip-gf-${fam.replace(/\s+/g, "-")}`;
+    if (document.getElementById(id)) return;
+    const link = document.createElement("link");
+    link.id = id;
+    link.rel = "stylesheet";
+    link.href = googleCssUrl(fam);
+    document.head.appendChild(link);
+  }
+
   async function loadFamily(family, url) {
     const fam = cleanText(family).replace(/^["']|["']$/g, "");
-    const src = cleanText(url);
-    if (!fam || !src) return false;
+    let src = cleanText(url);
+    if (!fam) return false;
+    if (src.startsWith("google:")) {
+      src = src.slice(7) || fam;
+      ensureGoogleCss(src);
+      try {
+        await document.fonts.load(`72px "${fam}"`);
+        await document.fonts.ready;
+      } catch {}
+      loadedFamilies.add(fam);
+      return true;
+    }
+    if (!src) return false;
     if (loadedFamilies.has(fam)) return true;
     if ([...document.fonts].some((face) => face.family === fam)) {
       loadedFamilies.add(fam);
@@ -219,6 +257,8 @@
     licenseInfo,
     kazakhGlyphReport,
     glyphLabel,
+    googleCssUrl,
+    ensureGoogleCss,
     savedNames,
     toggleFavorite,
     loadFamily,

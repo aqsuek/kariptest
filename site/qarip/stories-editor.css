@@ -378,7 +378,7 @@ html.qarip-stories .leto-textbar button.active{background:var(--leto-yellow);col
 
 /* Entry choice: full editor vs quick text-sticker mode */
 html.qarip-stories .leto-choice{
-  position:fixed;inset:0;z-index:90;background:var(--leto-bg);
+  position:fixed;inset:0;z-index:400;background:var(--leto-bg);
   overflow:auto;-webkit-overflow-scrolling:touch;
   display:flex;flex-direction:column;justify-content:flex-start;
   padding:max(24px,8vh) 20px calc(24px + env(safe-area-inset-bottom));

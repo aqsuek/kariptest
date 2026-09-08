@@ -1,24 +1,5 @@
 [
   {
-    "slug": "afolkalips-swash",
-    "name": "Afolkalips Swash",
-    "maker": "Жеке жинақ",
-    "author": "",
-    "style": "Қолжазба",
-    "category": "Handwritten",
-    "family": "Local Afolkalips Swash",
-    "download": "/qarip/fonts/user/afolkalips-swash.otf",
-    "preview": "/qarip/fonts/user/afolkalips-swash.otf",
-    "license": "check",
-    "local": true,
-    "similar": [
-      "kz-sign-painter",
-      "valisca",
-      "kz-balmoral",
-      "kz-buxton-sketch"
-    ]
-  },
-  {
     "slug": "afolkalips",
     "name": "Afolkalips",
     "maker": "Жеке жинақ",
@@ -26,7 +7,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local Afolkalips",
-    "download": "/qarip/fonts/user/afolkalips.ttf",
+    "download": "/qarip/downloads/afolkalips.zip",
     "preview": "/qarip/fonts/user/afolkalips.ttf",
     "license": "check",
     "local": true,
@@ -45,7 +26,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local Clickuper",
-    "download": "/qarip/fonts/user/clickuper.ttf",
+    "download": "/qarip/downloads/clickuper.zip",
     "preview": "/qarip/fonts/user/clickuper.ttf",
     "license": "check",
     "local": true,
@@ -64,7 +45,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local Dela Gothic One",
-    "download": "/qarip/fonts/user/dela-gothic-one.ttf",
+    "download": "/qarip/downloads/dela-gothic-one.zip",
     "preview": "/qarip/fonts/user/dela-gothic-one.ttf",
     "license": "check",
     "local": true,
@@ -85,7 +66,7 @@
     "style": "Сериф",
     "category": "Serif",
     "family": "Local Kobzar KS",
-    "download": "/qarip/fonts/user/kobzar-ks.ttf",
+    "download": "/qarip/downloads/kobzar-ks.zip",
     "preview": "/qarip/fonts/user/kobzar-ks.ttf",
     "license": "check",
     "local": true,
@@ -104,7 +85,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Facon",
-    "download": "/qarip/fonts/user/kz-facon.ttf",
+    "download": "/qarip/downloads/kz-facon.zip",
     "preview": "/qarip/fonts/user/kz-facon.ttf",
     "license": "check",
     "local": true,
@@ -123,7 +104,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Fighting Words",
-    "download": "/qarip/fonts/user/kz-fighting-words.ttf",
+    "download": "/qarip/downloads/kz-fighting-words.zip",
     "preview": "/qarip/fonts/user/kz-fighting-words.ttf",
     "license": "check",
     "local": true,
@@ -142,7 +123,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Gropled",
-    "download": "/qarip/fonts/user/kz-gropled.ttf",
+    "download": "/qarip/downloads/kz-gropled.zip",
     "preview": "/qarip/fonts/user/kz-gropled.ttf",
     "license": "check",
     "local": true,
@@ -161,7 +142,7 @@
     "style": "Санс-сериф",
     "category": "Sans Serif",
     "family": "Local Samsung Sharp Sans",
-    "download": "/qarip/fonts/user/kz-samsung-sharp-sans.ttf",
+    "download": "/qarip/downloads/kz-samsung-sharp-sans.zip",
     "preview": "/qarip/fonts/user/kz-samsung-sharp-sans.ttf",
     "license": "check",
     "local": true,
@@ -180,15 +161,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local Sign Painter",
-    "download": "/qarip/fonts/user/kz-sign-painter.ttf",
+    "download": "/qarip/downloads/kz-sign-painter.zip",
     "preview": "/qarip/fonts/user/kz-sign-painter.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "valisca",
       "kz-balmoral",
-      "kz-buxton-sketch"
+      "kz-buxton-sketch",
+      "kz-handvetica-neue"
     ]
   },
   {
@@ -199,7 +180,7 @@
     "style": "Моно",
     "category": "Monospace",
     "family": "Local Digital Strip",
-    "download": "/qarip/fonts/user/kz-digital-strip.ttf",
+    "download": "/qarip/downloads/kz-digital-strip.zip",
     "preview": "/qarip/fonts/user/kz-digital-strip.ttf",
     "license": "check",
     "local": true,
@@ -218,7 +199,7 @@
     "style": "Моно",
     "category": "Monospace",
     "family": "Local Nitti Cameo",
-    "download": "/qarip/fonts/user/nitti-cameo.ttf",
+    "download": "/qarip/downloads/nitti-typewriter-cameo.zip",
     "preview": "/qarip/fonts/user/nitti-cameo.ttf",
     "license": "check",
     "local": true,
@@ -237,7 +218,7 @@
     "style": "Моно",
     "category": "Monospace",
     "family": "Local Nitti Corrected",
-    "download": "/qarip/fonts/user/nitti-corrected.ttf",
+    "download": "/qarip/downloads/nitti-typewriter-corrected.zip",
     "preview": "/qarip/fonts/user/nitti-corrected.ttf",
     "license": "check",
     "local": true,
@@ -256,7 +237,7 @@
     "style": "Моно",
     "category": "Monospace",
     "family": "Local Nitti Normal",
-    "download": "/qarip/fonts/user/nitti-normal.ttf",
+    "download": "/qarip/downloads/nitti-typewriter-normal.zip",
     "preview": "/qarip/fonts/user/nitti-normal.ttf",
     "license": "check",
     "local": true,
@@ -275,7 +256,7 @@
     "style": "Моно",
     "category": "Monospace",
     "family": "Local Nitti Open",
-    "download": "/qarip/fonts/user/nitti-open.ttf",
+    "download": "/qarip/downloads/nitti-typewriter-open.zip",
     "preview": "/qarip/fonts/user/nitti-open.ttf",
     "license": "check",
     "local": true,
@@ -294,7 +275,7 @@
     "style": "Моно",
     "category": "Monospace",
     "family": "Local Nitti Underlined",
-    "download": "/qarip/fonts/user/nitti-underlined.ttf",
+    "download": "/qarip/downloads/nitti-typewriter-underlined.zip",
     "preview": "/qarip/fonts/user/nitti-underlined.ttf",
     "license": "check",
     "local": true,
@@ -313,7 +294,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local Octyabrskaya",
-    "download": "/qarip/fonts/user/octyabrskaya.ttf",
+    "download": "/qarip/downloads/octyabrskaya.zip",
     "preview": "/qarip/fonts/user/octyabrskaya.ttf",
     "license": "check",
     "local": true,
@@ -332,15 +313,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local Valisca",
-    "download": "/qarip/fonts/user/valisca.ttf",
+    "download": "/qarip/downloads/valisca.zip",
     "preview": "/qarip/fonts/user/valisca.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "kz-balmoral",
-      "kz-buxton-sketch"
+      "kz-buxton-sketch",
+      "kz-handvetica-neue"
     ]
   },
   {
@@ -481,25 +462,6 @@
     "tags": "stories reels рилс субтитр caption"
   },
   {
-    "slug": "20-25",
-    "name": "ТД шрифттер жинағы 20–25",
-    "maker": "Дмитрий Тектов · архив",
-    "author": "Дмитрий Тектов",
-    "style": "Дисплей",
-    "category": "Display",
-    "family": "Local TD Mars",
-    "download": "/qarip/downloads/td-fonts-20-25.zip",
-    "preview": "/qarip/fonts/user/td-mars.otf",
-    "license": "check",
-    "local": true,
-    "similar": [
-      "afolkalips",
-      "clickuper",
-      "dela-gothic-one",
-      "kz-facon"
-    ]
-  },
-  {
     "slug": "aesthet-nova",
     "name": "Aesthet Nova",
     "maker": "Жеке жинақ · архив",
@@ -526,7 +488,7 @@
     "style": "Сериф",
     "category": "Serif",
     "family": "Local Ante",
-    "download": "/qarip/fonts/user/ante.ttf",
+    "download": "/qarip/downloads/ante.zip",
     "preview": "/qarip/fonts/user/ante.ttf",
     "license": "check",
     "local": true,
@@ -564,7 +526,7 @@
     "style": "Сериф",
     "category": "Serif",
     "family": "Local Baker Signet",
-    "download": "/qarip/fonts/user/baker-signet.ttf",
+    "download": "/qarip/downloads/baker-signet-bt.zip",
     "preview": "/qarip/fonts/user/baker-signet.ttf",
     "license": "check",
     "local": true,
@@ -602,7 +564,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local Blackye",
-    "download": "/qarip/fonts/user/blackye.otf",
+    "download": "/qarip/downloads/blackye.zip",
     "preview": "/qarip/fonts/user/blackye.otf",
     "license": "check",
     "local": true,
@@ -718,7 +680,7 @@
     "style": "Сериф",
     "category": "Serif",
     "family": "Local Marli",
-    "download": "/qarip/fonts/user/marli.otf",
+    "download": "/qarip/downloads/marli.zip",
     "preview": "/qarip/fonts/user/marli.otf",
     "license": "check",
     "local": true,
@@ -798,7 +760,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Arc",
-    "download": "/qarip/fonts/user/kz-arc.ttf",
+    "download": "/qarip/downloads/kz-arc.zip",
     "preview": "/qarip/fonts/user/kz-arc.ttf",
     "license": "check",
     "local": true,
@@ -817,7 +779,7 @@
     "style": "Сериф",
     "category": "Serif",
     "family": "Local KZ Arturito Slab",
-    "download": "/qarip/fonts/user/kz-arturito-slab.ttf",
+    "download": "/qarip/downloads/kz-arturito-slab.zip",
     "preview": "/qarip/fonts/user/kz-arturito-slab.ttf",
     "license": "check",
     "local": true,
@@ -836,15 +798,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local KZ Balmoral",
-    "download": "/qarip/fonts/user/kz-balmoral.ttf",
+    "download": "/qarip/downloads/kz-balmoral.zip",
     "preview": "/qarip/fonts/user/kz-balmoral.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-buxton-sketch"
+      "kz-buxton-sketch",
+      "kz-handvetica-neue"
     ]
   },
   {
@@ -855,15 +817,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local KZ Buxton Sketch",
-    "download": "/qarip/fonts/user/kz-buxton-sketch.ttf",
+    "download": "/qarip/downloads/kz-buxton-sketch.zip",
     "preview": "/qarip/fonts/user/kz-buxton-sketch.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-handvetica-neue"
     ]
   },
   {
@@ -874,7 +836,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Dodo",
-    "download": "/qarip/fonts/user/kz-dodo.ttf",
+    "download": "/qarip/downloads/kz-dodo.zip",
     "preview": "/qarip/fonts/user/kz-dodo.ttf",
     "license": "check",
     "local": true,
@@ -912,7 +874,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Downtown",
-    "download": "/qarip/fonts/user/kz-downtown.ttf",
+    "download": "/qarip/downloads/kz-downtown.zip",
     "preview": "/qarip/fonts/user/kz-downtown.ttf",
     "license": "check",
     "local": true,
@@ -936,10 +898,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -950,7 +912,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Kurut",
-    "download": "/qarip/fonts/user/kz-kurut.ttf",
+    "download": "/qarip/downloads/kz-kurut.zip",
     "preview": "/qarip/fonts/user/kz-kurut.ttf",
     "license": "check",
     "local": true,
@@ -988,7 +950,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Rapier",
-    "download": "/qarip/fonts/user/kz-rapier-let.ttf",
+    "download": "/qarip/downloads/kz-rapier-let.zip",
     "preview": "/qarip/fonts/user/kz-rapier-let.ttf",
     "license": "check",
     "local": true,
@@ -1007,15 +969,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local KZ Rosa Marena",
-    "download": "/qarip/fonts/user/kz-rosa-marena.ttf",
+    "download": "/qarip/downloads/kz-rosa-marena.zip",
     "preview": "/qarip/fonts/user/kz-rosa-marena.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1026,7 +988,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Zallman Caps",
-    "download": "/qarip/fonts/user/kz-zallman-caps.ttf",
+    "download": "/qarip/downloads/kz-zallman-caps.zip",
     "preview": "/qarip/fonts/user/kz-zallman-caps.ttf",
     "license": "check",
     "local": true,
@@ -1066,7 +1028,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Arkhip",
-    "download": "/qarip/fonts/user/kz-arkhip.ttf",
+    "download": "/qarip/downloads/kz-arkhip.zip",
     "preview": "/qarip/fonts/user/kz-arkhip.ttf",
     "license": "check",
     "local": true,
@@ -1085,15 +1047,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local KZ Carolina",
-    "download": "/qarip/fonts/user/kz-carolina.ttf",
+    "download": "/qarip/downloads/kz-carolina.zip",
     "preview": "/qarip/fonts/user/kz-carolina.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1104,34 +1066,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local KZ Maler",
-    "download": "/qarip/fonts/user/kz-maler.ttf",
+    "download": "/qarip/downloads/kz-maler.zip",
     "preview": "/qarip/fonts/user/kz-maler.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
-    ]
-  },
-  {
-    "slug": "kz-number-plate",
-    "name": "KZ Number Plate",
-    "maker": "Жеке жинақ",
-    "author": "",
-    "style": "Моно",
-    "category": "Monospace",
-    "family": "Local KZ Number Plate",
-    "download": "/qarip/fonts/user/kz-number-plate.ttf",
-    "preview": "/qarip/fonts/user/kz-number-plate.ttf",
-    "license": "check",
-    "local": true,
-    "similar": [
-      "kz-digital-strip",
-      "nitti-typewriter-cameo",
-      "nitti-typewriter-corrected",
-      "nitti-typewriter-normal"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1161,7 +1104,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Plakat Titul",
-    "download": "/qarip/fonts/user/kz-plakat-titul.ttf",
+    "download": "/qarip/downloads/kz-plakat-titul.zip",
     "preview": "/qarip/fonts/user/kz-plakat-titul.ttf",
     "license": "check",
     "local": true,
@@ -1180,7 +1123,7 @@
     "style": "Санс-сериф",
     "category": "Sans Serif",
     "family": "Local KZ Sans Forgetica",
-    "download": "/qarip/fonts/user/kz-sans-forgetica.ttf",
+    "download": "/qarip/downloads/kz-sans-forgetica.zip",
     "preview": "/qarip/fonts/user/kz-sans-forgetica.ttf",
     "license": "check",
     "local": true,
@@ -1199,15 +1142,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local KZ Toms",
-    "download": "/qarip/fonts/user/kz-toms-handwritten.ttf",
+    "download": "/qarip/downloads/kz-toms-handwritten.zip",
     "preview": "/qarip/fonts/user/kz-toms-handwritten.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1256,15 +1199,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local Miama",
-    "download": "/qarip/fonts/user/miama.otf",
+    "download": "/qarip/downloads/miama.zip",
     "preview": "/qarip/fonts/user/miama.otf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1360,10 +1303,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1393,7 +1336,7 @@
     "style": "Санс-сериф",
     "category": "Sans Serif",
     "family": "Local Samsung One",
-    "download": "/qarip/fonts/user/samsung-one-400.ttf",
+    "download": "/qarip/downloads/samsung-one-400.zip",
     "preview": "/qarip/fonts/user/samsung-one-400.ttf",
     "license": "check",
     "local": true,
@@ -1412,7 +1355,7 @@
     "style": "Санс-сериф",
     "category": "Sans Serif",
     "family": "Local Samsung One",
-    "download": "/qarip/fonts/user/samsung-one-700.ttf",
+    "download": "/qarip/downloads/samsung-one-700.zip",
     "preview": "/qarip/fonts/user/samsung-one-400.ttf",
     "license": "check",
     "local": true,
@@ -1473,15 +1416,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local Xiomara",
-    "download": "/qarip/fonts/user/xiomara.ttf",
+    "download": "/qarip/downloads/xiomara.zip",
     "preview": "/qarip/fonts/user/xiomara.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1511,7 +1454,7 @@
     "style": "Санс-сериф",
     "category": "Sans Serif",
     "family": "Local Arial Black KZ",
-    "download": "/qarip/fonts/user/arial-black-kz.ttf",
+    "download": "/qarip/downloads/arial-black-kz.zip",
     "preview": "/qarip/fonts/user/arial-black-kz.ttf",
     "license": "check",
     "local": true,
@@ -1532,7 +1475,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local AT Argyn",
-    "download": "/qarip/fonts/user/at-argyn.ttf",
+    "download": "/qarip/downloads/at-argyn.zip",
     "preview": "/qarip/fonts/user/at-argyn.ttf",
     "license": "check",
     "local": true,
@@ -1551,15 +1494,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local Bickham Bold",
-    "download": "/qarip/fonts/user/bickham-script-bold.otf",
+    "download": "/qarip/downloads/bickham-script-pro-bold.zip",
     "preview": "/qarip/fonts/user/bickham-script-bold.otf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1570,15 +1513,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local Bickham Regular",
-    "download": "/qarip/fonts/user/bickham-script-regular.otf",
+    "download": "/qarip/downloads/bickham-script-pro-regular.zip",
     "preview": "/qarip/fonts/user/bickham-script-regular.otf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1589,15 +1532,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local Bickham Semibold",
-    "download": "/qarip/fonts/user/bickham-script-semibold.otf",
+    "download": "/qarip/downloads/bickham-script-pro-semibold.zip",
     "preview": "/qarip/fonts/user/bickham-script-semibold.otf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1648,7 +1591,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local Federico",
-    "download": "/qarip/fonts/user/federico.otf",
+    "download": "/qarip/downloads/federico.zip",
     "preview": "/qarip/fonts/user/federico.otf",
     "license": "check",
     "local": true,
@@ -1768,7 +1711,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local High Voltage",
-    "download": "/qarip/fonts/user/high-voltage-rough.ttf",
+    "download": "/qarip/downloads/high-voltage-rough.zip",
     "preview": "/qarip/fonts/user/high-voltage-rough.ttf",
     "license": "check",
     "local": true,
@@ -1846,7 +1789,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Copperplate",
-    "download": "/qarip/fonts/user/kz-copperplate.ttf",
+    "download": "/qarip/downloads/kz-copperplate.zip",
     "preview": "/qarip/fonts/user/kz-copperplate.ttf",
     "license": "check",
     "local": true,
@@ -1865,15 +1808,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local KZ Dusha",
-    "download": "/qarip/fonts/user/kz-dusha.ttf",
+    "download": "/qarip/downloads/kz-dusha.zip",
     "preview": "/qarip/fonts/user/kz-dusha.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1884,15 +1827,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local KZ Margarita",
-    "download": "/qarip/fonts/user/kz-margarita-script.ttf",
+    "download": "/qarip/downloads/kz-margarita-script.zip",
     "preview": "/qarip/fonts/user/kz-margarita-script.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1903,15 +1846,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local KZ You",
-    "download": "/qarip/fonts/user/kz-you-2013.ttf",
+    "download": "/qarip/downloads/kz-you-2013.zip",
     "preview": "/qarip/fonts/user/kz-you-2013.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -1943,7 +1886,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Bolyar",
-    "download": "/qarip/fonts/user/kz-bolyar-ornate.otf",
+    "download": "/qarip/downloads/kz-bolyar-ornate.zip",
     "preview": "/qarip/fonts/user/kz-bolyar-ornate.otf",
     "license": "check",
     "local": true,
@@ -1962,7 +1905,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Bradobrei",
-    "download": "/qarip/fonts/user/kz-bradobrei.ttf",
+    "download": "/qarip/downloads/kz-bradobrei.zip",
     "preview": "/qarip/fonts/user/kz-bradobrei.ttf",
     "license": "check",
     "local": true,
@@ -1981,7 +1924,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Furore",
-    "download": "/qarip/fonts/user/kz-furore.otf",
+    "download": "/qarip/downloads/kz-furore.zip",
     "preview": "/qarip/fonts/user/kz-furore.otf",
     "license": "check",
     "local": true,
@@ -2002,7 +1945,7 @@
     "style": "Санс-сериф",
     "category": "Sans Serif",
     "family": "Local KZ London",
-    "download": "/qarip/fonts/user/kz-london.otf",
+    "download": "/qarip/downloads/kz-london.zip",
     "preview": "/qarip/fonts/user/kz-london.otf",
     "license": "check",
     "local": true,
@@ -2021,15 +1964,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local KZ Champion Script",
-    "download": "/qarip/fonts/user/kz-pf-champion-script.ttf",
+    "download": "/qarip/downloads/kz-pf-champion-script.zip",
     "preview": "/qarip/fonts/user/kz-pf-champion-script.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -2040,7 +1983,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Local KZ Piedra",
-    "download": "/qarip/fonts/user/kz-piedra.ttf",
+    "download": "/qarip/downloads/kz-piedra.zip",
     "preview": "/qarip/fonts/user/kz-piedra.ttf",
     "license": "check",
     "local": true,
@@ -2064,10 +2007,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -2138,7 +2081,7 @@
     "category": "Display",
     "family": "Local Really No 2",
     "download": "/qarip/downloads/really-no-2.zip",
-    "preview": "",
+    "preview": "/qarip/fonts/user/really-no-2.ttf",
     "license": "check",
     "local": true,
     "similar": [
@@ -2277,10 +2220,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -2310,15 +2253,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Local Ventura Script",
-    "download": "/qarip/fonts/user/ventura-script.ttf",
+    "download": "/qarip/downloads/ventura-script.zip",
     "preview": "/qarip/fonts/user/ventura-script.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -2371,25 +2314,6 @@
     "family": "Batch4 akzentica-4f",
     "download": "/qarip/downloads/akzentica-4f.zip",
     "preview": "/qarip/fonts/user/akzentica-4f.ttf",
-    "license": "check",
-    "local": true,
-    "similar": [
-      "afolkalips",
-      "clickuper",
-      "dela-gothic-one",
-      "kz-facon"
-    ]
-  },
-  {
-    "slug": "alboroto",
-    "name": "Alboroto",
-    "maker": "Жеке жинақ · архив",
-    "author": "",
-    "style": "Дисплей",
-    "category": "Display",
-    "family": "Batch4 alboroto",
-    "download": "/qarip/downloads/alboroto.zip",
-    "preview": "/qarip/fonts/user/alboroto.otf",
     "license": "check",
     "local": true,
     "similar": [
@@ -2678,10 +2602,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -2834,10 +2758,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -2950,10 +2874,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -3083,10 +3007,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -3315,10 +3239,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -3467,10 +3391,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -3581,10 +3505,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -3619,29 +3543,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
-    ]
-  },
-  {
-    "slug": "leosler",
-    "name": "Leosler",
-    "maker": "Жеке жинақ · архив",
-    "author": "",
-    "style": "Дисплей",
-    "category": "Display",
-    "family": "Batch4 leosler",
-    "download": "/qarip/downloads/leosler.zip",
-    "preview": "/qarip/fonts/user/leosler.otf",
-    "license": "check",
-    "local": true,
-    "similar": [
-      "afolkalips",
-      "clickuper",
-      "dela-gothic-one",
-      "kz-facon"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -3773,10 +3678,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -3887,10 +3792,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -4404,10 +4309,10 @@
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -4437,7 +4342,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Batch4 artica-rough-pro-light",
-    "download": "/qarip/fonts/user/artica-rough-pro-light.ttf",
+    "download": "/qarip/downloads/artica-rough-pro-light.zip",
     "preview": "/qarip/fonts/user/artica-rough-pro-light.ttf",
     "license": "check",
     "local": true,
@@ -4456,7 +4361,7 @@
     "style": "Сериф",
     "category": "Serif",
     "family": "Batch4 forum-regular",
-    "download": "/qarip/fonts/user/forum-regular.ttf",
+    "download": "/qarip/downloads/forum-regular.zip",
     "preview": "/qarip/fonts/user/forum-regular.ttf",
     "license": "check",
     "local": true,
@@ -4475,7 +4380,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Batch4 fry-pro",
-    "download": "/qarip/fonts/user/fry-pro.otf",
+    "download": "/qarip/downloads/fry-pro.zip",
     "preview": "/qarip/fonts/user/fry-pro.otf",
     "license": "check",
     "local": true,
@@ -4494,7 +4399,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Batch4 kz-dagger",
-    "download": "/qarip/fonts/user/kz-dagger.ttf",
+    "download": "/qarip/downloads/kz-dagger.zip",
     "preview": "/qarip/fonts/user/kz-dagger.ttf",
     "license": "check",
     "local": true,
@@ -4513,7 +4418,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Batch4 kz-mateur",
-    "download": "/qarip/fonts/user/kz-mateur.ttf",
+    "download": "/qarip/downloads/kz-mateur.zip",
     "preview": "/qarip/fonts/user/kz-mateur.ttf",
     "license": "check",
     "local": true,
@@ -4532,15 +4437,15 @@
     "style": "Қолжазба",
     "category": "Handwritten",
     "family": "Batch4 kzbrusher",
-    "download": "/qarip/fonts/user/kzbrusher.ttf",
+    "download": "/qarip/downloads/kzbrusher.zip",
     "preview": "/qarip/fonts/user/kzbrusher.ttf",
     "license": "check",
     "local": true,
     "similar": [
-      "afolkalips-swash",
       "kz-sign-painter",
       "valisca",
-      "kz-balmoral"
+      "kz-balmoral",
+      "kz-buxton-sketch"
     ]
   },
   {
@@ -4551,7 +4456,7 @@
     "style": "Дисплей",
     "category": "Display",
     "family": "Batch4 kzsupercell-magic",
-    "download": "/qarip/fonts/user/kzsupercell-magic.ttf",
+    "download": "/qarip/downloads/kzsupercell-magic.zip",
     "preview": "/qarip/fonts/user/kzsupercell-magic.ttf",
     "license": "check",
     "local": true,
@@ -4560,6 +4465,1386 @@
       "clickuper",
       "dela-gothic-one",
       "kz-facon"
+    ]
+  },
+  {
+    "slug": "alegreya",
+    "name": "Alegreya",
+    "maker": "Google Fonts",
+    "author": "Juan Pablo del Peral",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Alegreya",
+    "download": "https://fonts.google.com/specimen/Alegreya",
+    "preview": "google:Alegreya",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alice-google",
+      "bitter-google",
+      "brygada-1918",
+      "cormorant-garamond"
+    ]
+  },
+  {
+    "slug": "alegreya-sans",
+    "name": "Alegreya Sans",
+    "maker": "Google Fonts",
+    "author": "Juan Pablo del Peral",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Alegreya Sans",
+    "download": "https://fonts.google.com/specimen/Alegreya+Sans",
+    "preview": "google:Alegreya Sans",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "andika",
+      "arimo",
+      "arsenal",
+      "comfortaa-google"
+    ]
+  },
+  {
+    "slug": "alice-google",
+    "name": "Alice",
+    "maker": "Google Fonts",
+    "author": "Ksenia Erulevich",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Alice",
+    "download": "https://fonts.google.com/specimen/Alice",
+    "preview": "google:Alice",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "bitter-google",
+      "brygada-1918",
+      "cormorant-garamond"
+    ]
+  },
+  {
+    "slug": "andika",
+    "name": "Andika",
+    "maker": "Google Fonts",
+    "author": "SIL International",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Andika",
+    "download": "https://fonts.google.com/specimen/Andika",
+    "preview": "google:Andika",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "arimo",
+      "arsenal",
+      "comfortaa-google"
+    ]
+  },
+  {
+    "slug": "arimo",
+    "name": "Arimo",
+    "maker": "Google Fonts",
+    "author": "Steve Matteson",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Arimo",
+    "download": "https://fonts.google.com/specimen/Arimo",
+    "preview": "google:Arimo",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arsenal",
+      "comfortaa-google"
+    ]
+  },
+  {
+    "slug": "arsenal",
+    "name": "Arsenal",
+    "maker": "Google Fonts",
+    "author": "Andrij Shevchenko",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Arsenal",
+    "download": "https://fonts.google.com/specimen/Arsenal",
+    "preview": "google:Arsenal",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "comfortaa-google"
+    ]
+  },
+  {
+    "slug": "bad-script",
+    "name": "Bad Script",
+    "maker": "Google Fonts",
+    "author": "Cyreal",
+    "style": "Қолжазба",
+    "category": "Handwritten",
+    "family": "Bad Script",
+    "download": "https://fonts.google.com/specimen/Bad+Script",
+    "preview": "google:Bad Script",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "balsamiq-sans",
+      "caveat",
+      "pangolin-google",
+      "playpen-sans"
+    ]
+  },
+  {
+    "slug": "balsamiq-sans",
+    "name": "Balsamiq Sans",
+    "maker": "Google Fonts",
+    "author": "Michael Angeles",
+    "style": "Қолжазба",
+    "category": "Handwritten",
+    "family": "Balsamiq Sans",
+    "download": "https://fonts.google.com/specimen/Balsamiq+Sans",
+    "preview": "google:Balsamiq Sans",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "bad-script",
+      "caveat",
+      "pangolin-google",
+      "playpen-sans"
+    ]
+  },
+  {
+    "slug": "bitter-google",
+    "name": "Bitter",
+    "maker": "Google Fonts",
+    "author": "Sol Matas",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Bitter",
+    "download": "https://fonts.google.com/specimen/Bitter",
+    "preview": "google:Bitter",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "brygada-1918",
+      "cormorant-garamond"
+    ]
+  },
+  {
+    "slug": "brygada-1918",
+    "name": "Brygada 1918",
+    "maker": "Google Fonts",
+    "author": "Mateusz Machalski",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Brygada 1918",
+    "download": "https://fonts.google.com/specimen/Brygada+1918",
+    "preview": "google:Brygada 1918",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "cormorant-garamond"
+    ]
+  },
+  {
+    "slug": "caveat",
+    "name": "Caveat",
+    "maker": "Google Fonts",
+    "author": "Pablo Impallari",
+    "style": "Қолжазба",
+    "category": "Handwritten",
+    "family": "Caveat",
+    "download": "https://fonts.google.com/specimen/Caveat",
+    "preview": "google:Caveat",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "bad-script",
+      "balsamiq-sans",
+      "pangolin-google",
+      "playpen-sans"
+    ]
+  },
+  {
+    "slug": "comfortaa-google",
+    "name": "Comfortaa",
+    "maker": "Google Fonts",
+    "author": "Johan Aakerlund",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Comfortaa",
+    "download": "https://fonts.google.com/specimen/Comfortaa",
+    "preview": "google:Comfortaa",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "commissioner",
+    "name": "Commissioner",
+    "maker": "Google Fonts",
+    "author": "Kostas Bartsokas",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Commissioner",
+    "download": "https://fonts.google.com/specimen/Commissioner",
+    "preview": "google:Commissioner",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "cormorant-garamond",
+    "name": "Cormorant Garamond",
+    "maker": "Google Fonts",
+    "author": "Christian Thalmann",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Cormorant Garamond",
+    "download": "https://fonts.google.com/specimen/Cormorant+Garamond",
+    "preview": "google:Cormorant Garamond",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "cousine",
+    "name": "Cousine",
+    "maker": "Google Fonts",
+    "author": "Steve Matteson",
+    "style": "Моно",
+    "category": "Monospace",
+    "family": "Cousine",
+    "download": "https://fonts.google.com/specimen/Cousine",
+    "preview": "google:Cousine",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "fira-code",
+      "fira-mono",
+      "ibm-plex-mono",
+      "noto-sans-mono"
+    ]
+  },
+  {
+    "slug": "cuprum",
+    "name": "Cuprum",
+    "maker": "Google Fonts",
+    "author": "Miles Newlyn",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Cuprum",
+    "download": "https://fonts.google.com/specimen/Cuprum",
+    "preview": "google:Cuprum",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "didact-gothic",
+    "name": "Didact Gothic",
+    "maker": "Google Fonts",
+    "author": "Cyreal",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Didact Gothic",
+    "download": "https://fonts.google.com/specimen/Didact+Gothic",
+    "preview": "google:Didact Gothic",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "eb-garamond",
+    "name": "EB Garamond",
+    "maker": "Google Fonts",
+    "author": "Georg Duffner",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "EB Garamond",
+    "download": "https://fonts.google.com/specimen/EB+Garamond",
+    "preview": "google:EB Garamond",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "exo-2",
+    "name": "Exo 2",
+    "maker": "Google Fonts",
+    "author": "Natanael Gama",
+    "style": "Дисплей",
+    "category": "Display",
+    "family": "Exo 2",
+    "download": "https://fonts.google.com/specimen/Exo+2",
+    "preview": "google:Exo 2",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "forum",
+      "oswald",
+      "orelega-one",
+      "ponomar"
+    ]
+  },
+  {
+    "slug": "fira-code",
+    "name": "Fira Code",
+    "maker": "Google Fonts",
+    "author": "Nikita Prokopov",
+    "style": "Моно",
+    "category": "Monospace",
+    "family": "Fira Code",
+    "download": "https://fonts.google.com/specimen/Fira+Code",
+    "preview": "google:Fira Code",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "cousine",
+      "fira-mono",
+      "ibm-plex-mono",
+      "noto-sans-mono"
+    ]
+  },
+  {
+    "slug": "fira-mono",
+    "name": "Fira Mono",
+    "maker": "Google Fonts",
+    "author": "Mozilla",
+    "style": "Моно",
+    "category": "Monospace",
+    "family": "Fira Mono",
+    "download": "https://fonts.google.com/specimen/Fira+Mono",
+    "preview": "google:Fira Mono",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "cousine",
+      "fira-code",
+      "ibm-plex-mono",
+      "noto-sans-mono"
+    ]
+  },
+  {
+    "slug": "fira-sans",
+    "name": "Fira Sans",
+    "maker": "Google Fonts",
+    "author": "Mozilla",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Fira Sans",
+    "download": "https://fonts.google.com/specimen/Fira+Sans",
+    "preview": "google:Fira Sans",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "forum",
+    "name": "Forum",
+    "maker": "Google Fonts",
+    "author": "Denis Masharov",
+    "style": "Дисплей",
+    "category": "Display",
+    "family": "Forum",
+    "download": "https://fonts.google.com/specimen/Forum",
+    "preview": "google:Forum",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "exo-2",
+      "oswald",
+      "orelega-one",
+      "ponomar"
+    ]
+  },
+  {
+    "slug": "geologica",
+    "name": "Geologica",
+    "maker": "Google Fonts",
+    "author": "Monokrom",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Geologica",
+    "download": "https://fonts.google.com/specimen/Geologica",
+    "preview": "google:Geologica",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "golos-text",
+    "name": "Golos Text",
+    "maker": "Google Fonts",
+    "author": "Paratype",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Golos Text",
+    "download": "https://fonts.google.com/specimen/Golos+Text",
+    "preview": "google:Golos Text",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "ibm-plex-mono",
+    "name": "IBM Plex Mono",
+    "maker": "Google Fonts",
+    "author": "IBM",
+    "style": "Моно",
+    "category": "Monospace",
+    "family": "IBM Plex Mono",
+    "download": "https://fonts.google.com/specimen/IBM+Plex+Mono",
+    "preview": "google:IBM Plex Mono",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "cousine",
+      "fira-code",
+      "fira-mono",
+      "noto-sans-mono"
+    ]
+  },
+  {
+    "slug": "ibm-plex-sans",
+    "name": "IBM Plex Sans",
+    "maker": "Google Fonts",
+    "author": "IBM",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "IBM Plex Sans",
+    "download": "https://fonts.google.com/specimen/IBM+Plex+Sans",
+    "preview": "google:IBM Plex Sans",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "ibm-plex-serif",
+    "name": "IBM Plex Serif",
+    "maker": "Google Fonts",
+    "author": "IBM",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "IBM Plex Serif",
+    "download": "https://fonts.google.com/specimen/IBM+Plex+Serif",
+    "preview": "google:IBM Plex Serif",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "inter",
+    "name": "Inter",
+    "maker": "Google Fonts",
+    "author": "Rasmus Andersson",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Inter",
+    "download": "https://fonts.google.com/specimen/Inter",
+    "preview": "google:Inter",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "literata",
+    "name": "Literata",
+    "maker": "Google Fonts",
+    "author": "TypeTogether",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Literata",
+    "download": "https://fonts.google.com/specimen/Literata",
+    "preview": "google:Literata",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "lora",
+    "name": "Lora",
+    "maker": "Google Fonts",
+    "author": "Cyreal",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Lora",
+    "download": "https://fonts.google.com/specimen/Lora",
+    "preview": "google:Lora",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "manrope",
+    "name": "Manrope",
+    "maker": "Google Fonts",
+    "author": "Mikhail Sharanda",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Manrope",
+    "download": "https://fonts.google.com/specimen/Manrope",
+    "preview": "google:Manrope",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "marmelad",
+    "name": "Marmelad",
+    "maker": "Google Fonts",
+    "author": "Cyreal",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Marmelad",
+    "download": "https://fonts.google.com/specimen/Marmelad",
+    "preview": "google:Marmelad",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "merriweather-google",
+    "name": "Merriweather",
+    "maker": "Google Fonts",
+    "author": "Sorkin Type",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Merriweather",
+    "download": "https://fonts.google.com/specimen/Merriweather",
+    "preview": "google:Merriweather",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "montserrat-google",
+    "name": "Montserrat",
+    "maker": "Google Fonts",
+    "author": "Julieta Ulanovsky",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Montserrat",
+    "download": "https://fonts.google.com/specimen/Montserrat",
+    "preview": "google:Montserrat",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "noto-sans-google",
+    "name": "Noto Sans",
+    "maker": "Google Fonts",
+    "author": "Google",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Noto Sans",
+    "download": "https://fonts.google.com/specimen/Noto+Sans",
+    "preview": "google:Noto Sans",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "noto-sans-mono",
+    "name": "Noto Sans Mono",
+    "maker": "Google Fonts",
+    "author": "Google",
+    "style": "Моно",
+    "category": "Monospace",
+    "family": "Noto Sans Mono",
+    "download": "https://fonts.google.com/specimen/Noto+Sans+Mono",
+    "preview": "google:Noto Sans Mono",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "cousine",
+      "fira-code",
+      "fira-mono",
+      "ibm-plex-mono"
+    ]
+  },
+  {
+    "slug": "noto-serif-google",
+    "name": "Noto Serif",
+    "maker": "Google Fonts",
+    "author": "Google",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Noto Serif",
+    "download": "https://fonts.google.com/specimen/Noto+Serif",
+    "preview": "google:Noto Serif",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "onest",
+    "name": "Onest",
+    "maker": "Google Fonts",
+    "author": "Andrey Okonetchnikov",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Onest",
+    "download": "https://fonts.google.com/specimen/Onest",
+    "preview": "google:Onest",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "nunito",
+    "name": "Nunito",
+    "maker": "Google Fonts",
+    "author": "Vernon Adams",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Nunito",
+    "download": "https://fonts.google.com/specimen/Nunito",
+    "preview": "google:Nunito",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "old-standard-tt",
+    "name": "Old Standard TT",
+    "maker": "Google Fonts",
+    "author": "Alexey Kryukov",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Old Standard TT",
+    "download": "https://fonts.google.com/specimen/Old+Standard+TT",
+    "preview": "google:Old Standard TT",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "open-sans",
+    "name": "Open Sans",
+    "maker": "Google Fonts",
+    "author": "Steve Matteson",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Open Sans",
+    "download": "https://fonts.google.com/specimen/Open+Sans",
+    "preview": "google:Open Sans",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "oswald",
+    "name": "Oswald",
+    "maker": "Google Fonts",
+    "author": "Vernon Adams",
+    "style": "Дисплей",
+    "category": "Display",
+    "family": "Oswald",
+    "download": "https://fonts.google.com/specimen/Oswald",
+    "preview": "google:Oswald",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "exo-2",
+      "forum",
+      "orelega-one",
+      "ponomar"
+    ]
+  },
+  {
+    "slug": "orelega-one",
+    "name": "Orelega One",
+    "maker": "Google Fonts",
+    "author": "Andrey Karter",
+    "style": "Дисплей",
+    "category": "Display",
+    "family": "Orelega One",
+    "download": "https://fonts.google.com/specimen/Orelega+One",
+    "preview": "google:Orelega One",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "exo-2",
+      "forum",
+      "oswald",
+      "ponomar"
+    ]
+  },
+  {
+    "slug": "pangolin-google",
+    "name": "Pangolin",
+    "maker": "Google Fonts",
+    "author": "Kevin Burke",
+    "style": "Қолжазба",
+    "category": "Handwritten",
+    "family": "Pangolin",
+    "download": "https://fonts.google.com/specimen/Pangolin",
+    "preview": "google:Pangolin",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "bad-script",
+      "balsamiq-sans",
+      "caveat",
+      "playpen-sans"
+    ]
+  },
+  {
+    "slug": "playfair-display",
+    "name": "Playfair Display",
+    "maker": "Google Fonts",
+    "author": "Claus Eggers Sørensen",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Playfair Display",
+    "download": "https://fonts.google.com/specimen/Playfair+Display",
+    "preview": "google:Playfair Display",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "playpen-sans",
+    "name": "Playpen Sans",
+    "maker": "Google Fonts",
+    "author": "TypeTogether",
+    "style": "Қолжазба",
+    "category": "Handwritten",
+    "family": "Playpen Sans",
+    "download": "https://fonts.google.com/specimen/Playpen+Sans",
+    "preview": "google:Playpen Sans",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "bad-script",
+      "balsamiq-sans",
+      "caveat",
+      "pangolin-google"
+    ]
+  },
+  {
+    "slug": "ponomar",
+    "name": "Ponomar",
+    "maker": "Google Fonts",
+    "author": "Aleksandr Andreev",
+    "style": "Дисплей",
+    "category": "Display",
+    "family": "Ponomar",
+    "download": "https://fonts.google.com/specimen/Ponomar",
+    "preview": "google:Ponomar",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "exo-2",
+      "forum",
+      "oswald",
+      "orelega-one"
+    ]
+  },
+  {
+    "slug": "prata",
+    "name": "Prata",
+    "maker": "Google Fonts",
+    "author": "Cyreal",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Prata",
+    "download": "https://fonts.google.com/specimen/Prata",
+    "preview": "google:Prata",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "pt-mono",
+    "name": "PT Mono",
+    "maker": "Google Fonts",
+    "author": "Paratype",
+    "style": "Моно",
+    "category": "Monospace",
+    "family": "PT Mono",
+    "download": "https://fonts.google.com/specimen/PT+Mono",
+    "preview": "google:PT Mono",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "cousine",
+      "fira-code",
+      "fira-mono",
+      "ibm-plex-mono"
+    ]
+  },
+  {
+    "slug": "pt-sans",
+    "name": "PT Sans",
+    "maker": "Google Fonts",
+    "author": "Paratype",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "PT Sans",
+    "download": "https://fonts.google.com/specimen/PT+Sans",
+    "preview": "google:PT Sans",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "pt-sans-narrow",
+    "name": "PT Sans Narrow",
+    "maker": "Google Fonts",
+    "author": "Paratype",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "PT Sans Narrow",
+    "download": "https://fonts.google.com/specimen/PT+Sans+Narrow",
+    "preview": "google:PT Sans Narrow",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "pt-serif",
+    "name": "PT Serif",
+    "maker": "Google Fonts",
+    "author": "Paratype",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "PT Serif",
+    "download": "https://fonts.google.com/specimen/PT+Serif",
+    "preview": "google:PT Serif",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "raleway",
+    "name": "Raleway",
+    "maker": "Google Fonts",
+    "author": "Matt McInerney",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Raleway",
+    "download": "https://fonts.google.com/specimen/Raleway",
+    "preview": "google:Raleway",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "roboto",
+    "name": "Roboto",
+    "maker": "Google Fonts",
+    "author": "Christian Robertson",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Roboto",
+    "download": "https://fonts.google.com/specimen/Roboto",
+    "preview": "google:Roboto",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "roboto-condensed",
+    "name": "Roboto Condensed",
+    "maker": "Google Fonts",
+    "author": "Christian Robertson",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Roboto Condensed",
+    "download": "https://fonts.google.com/specimen/Roboto+Condensed",
+    "preview": "google:Roboto Condensed",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "roboto-mono",
+    "name": "Roboto Mono",
+    "maker": "Google Fonts",
+    "author": "Christian Robertson",
+    "style": "Моно",
+    "category": "Monospace",
+    "family": "Roboto Mono",
+    "download": "https://fonts.google.com/specimen/Roboto+Mono",
+    "preview": "google:Roboto Mono",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "cousine",
+      "fira-code",
+      "fira-mono",
+      "ibm-plex-mono"
+    ]
+  },
+  {
+    "slug": "roboto-slab",
+    "name": "Roboto Slab",
+    "maker": "Google Fonts",
+    "author": "Christian Robertson",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Roboto Slab",
+    "download": "https://fonts.google.com/specimen/Roboto+Slab",
+    "preview": "google:Roboto Slab",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "rubik",
+    "name": "Rubik",
+    "maker": "Google Fonts",
+    "author": "Hubert & Fischer",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Rubik",
+    "download": "https://fonts.google.com/specimen/Rubik",
+    "preview": "google:Rubik",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "source-sans-3",
+    "name": "Source Sans 3",
+    "maker": "Google Fonts",
+    "author": "Paul D. Hunt",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Source Sans 3",
+    "download": "https://fonts.google.com/specimen/Source+Sans+3",
+    "preview": "google:Source Sans 3",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "source-serif-4",
+    "name": "Source Serif 4",
+    "maker": "Google Fonts",
+    "author": "Frank Grießhammer",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Source Serif 4",
+    "download": "https://fonts.google.com/specimen/Source+Serif+4",
+    "preview": "google:Source Serif 4",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "gabriela",
+    "name": "Gabriela",
+    "maker": "Google Fonts",
+    "author": "Antonio Mejía",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Gabriela",
+    "download": "https://fonts.google.com/specimen/Gabriela",
+    "preview": "google:Gabriela",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "kurale",
+    "name": "Kurale",
+    "maker": "Google Fonts",
+    "author": "Sorkin Type",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Kurale",
+    "download": "https://fonts.google.com/specimen/Kurale",
+    "preview": "google:Kurale",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "ubuntu-google",
+    "name": "Ubuntu",
+    "maker": "Google Fonts",
+    "author": "Dalton Maag",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Ubuntu",
+    "download": "https://fonts.google.com/specimen/Ubuntu",
+    "preview": "google:Ubuntu",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "ubuntu-mono",
+    "name": "Ubuntu Mono",
+    "maker": "Google Fonts",
+    "author": "Dalton Maag",
+    "style": "Моно",
+    "category": "Monospace",
+    "family": "Ubuntu Mono",
+    "download": "https://fonts.google.com/specimen/Ubuntu+Mono",
+    "preview": "google:Ubuntu Mono",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "cousine",
+      "fira-code",
+      "fira-mono",
+      "ibm-plex-mono"
+    ]
+  },
+  {
+    "slug": "vollkorn-google",
+    "name": "Vollkorn",
+    "maker": "Google Fonts",
+    "author": "Friedrich Althausen",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Vollkorn",
+    "download": "https://fonts.google.com/specimen/Vollkorn",
+    "preview": "google:Vollkorn",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "cormorant",
+    "name": "Cormorant",
+    "maker": "Google Fonts",
+    "author": "Christian Thalmann",
+    "style": "Сериф",
+    "category": "Serif",
+    "family": "Cormorant",
+    "download": "https://fonts.google.com/specimen/Cormorant",
+    "preview": "google:Cormorant",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya",
+      "alice-google",
+      "bitter-google",
+      "brygada-1918"
+    ]
+  },
+  {
+    "slug": "ysabeau-office",
+    "name": "Ysabeau Office",
+    "maker": "Google Fonts",
+    "author": "Christian Thalmann",
+    "style": "Санс-сериф",
+    "category": "Sans Serif",
+    "family": "Ysabeau Office",
+    "download": "https://fonts.google.com/specimen/Ysabeau+Office",
+    "preview": "google:Ysabeau Office",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "alegreya-sans",
+      "andika",
+      "arimo",
+      "arsenal"
+    ]
+  },
+  {
+    "slug": "yeseva-one",
+    "name": "Yeseva One",
+    "maker": "Google Fonts",
+    "author": "Jovanny Lemonad",
+    "style": "Дисплей",
+    "category": "Display",
+    "family": "Yeseva One",
+    "download": "https://fonts.google.com/specimen/Yeseva+One",
+    "preview": "google:Yeseva One",
+    "license": "open",
+    "local": false,
+    "source": "google",
+    "similar": [
+      "exo-2",
+      "forum",
+      "oswald",
+      "orelega-one"
     ]
   }
 ]

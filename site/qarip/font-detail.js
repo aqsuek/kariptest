@@ -57,6 +57,12 @@
     paintFav();
   });
 
+  const toggle = document.querySelector(".qarip-nav-toggle");
+  toggle?.addEventListener("click", () => {
+    const open = document.documentElement.classList.toggle("qarip-nav-open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
   dl?.addEventListener("click", (event) => {
     const href = dl.getAttribute("href") || download;
     const filename = (href.split("/").pop() || "").split("?")[0];
