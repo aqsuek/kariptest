@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>aqsuek</title>
-    <meta name="description" content="aqsuek жобалары. Qarip — қазақша қаріптер." />
+    <meta name="description" content="aqsuek жобалары. Таңба — қазақша қаріптер." />
+    <link rel="icon" href="/tanba/assets/tanba-mark.png" type="image/png"/>
     <style>
       :root {
-        --bg: #0c0d0b;
+        --bg: #07102a;
         --text: #f2f0e9;
         --muted: #9a9688;
         --line: rgba(242, 240, 233, 0.12);
-        --accent: #c8f54a;
+        --accent: #4d7cff;
       }
       * { box-sizing: border-box; }
       body {
@@ -26,10 +27,7 @@
       }
       main { width: min(640px, 100%); }
       p { color: var(--muted); line-height: 1.55; }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
+      a { color: inherit; text-decoration: none; }
       .brand {
         font-size: 0.8rem;
         letter-spacing: 0.16em;
@@ -50,7 +48,14 @@
         border: 1px solid var(--line);
         border-radius: 16px;
       }
-      .card strong { display: block; font-size: 1.15rem; }
+      .card img {
+        height: 28px;
+        width: auto;
+        display: block;
+        background: #fff;
+        padding: 8px 12px;
+        border-radius: 10px;
+      }
       .card span { color: var(--muted); font-size: 0.95rem; }
       .go { color: var(--accent); font-weight: 700; }
     </style>
@@ -59,9 +64,9 @@
     <main>
       <p class="brand">aqsuek.kz</p>
       <h1>Жобалар</h1>
-      <a class="card" href="/qarip/">
+      <a class="card" href="/tanba/">
         <div>
-          <strong>Qarip</strong>
+          <img src="/tanba/assets/tanba-logo.png" alt="Таңба"/>
           <span>Қазақша қаріптер каталогы</span>
         </div>
         <span class="go">ашу</span>

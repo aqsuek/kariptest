@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aqsuek.kz/qarip/sitemap-fonts.xml
+Sitemap: https://aqsuek.kz/tanba/sitemap-fonts.xml

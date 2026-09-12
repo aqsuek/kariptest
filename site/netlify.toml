@@ -3,5 +3,15 @@
 
 [[redirects]]
   from = "/qarip"
-  to = "/qarip/"
+  to = "/tanba/"
+  status = 301
+
+[[redirects]]
+  from = "/qarip/*"
+  to = "/tanba/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/tanba"
+  to = "/tanba/"
   status = 301
