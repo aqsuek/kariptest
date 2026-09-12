@@ -368,6 +368,7 @@ html.qarip-stories .leto-textbar{
   transform:translateX(-50%);z-index:46;
   width:min(420px,94vw);display:none;gap:6px;overflow:auto;
   padding:8px;border-radius:16px;background:#1b1b22ee;backdrop-filter:blur(10px);
+  align-items:center;
 }
 html.qarip-stories .leto-textbar.on{display:flex}
 html.qarip-stories .leto-textbar button{
@@ -375,6 +376,41 @@ html.qarip-stories .leto-textbar button{
   background:#2f2f38;color:#fff;font:700 12px/1 Arial,sans-serif;cursor:pointer;
 }
 html.qarip-stories .leto-textbar button.active{background:var(--leto-yellow);color:#111}
+html.qarip-stories .leto-face-group{
+  display:flex;flex:0 0 auto;gap:4px;padding:3px;border-radius:999px;background:#111318;
+}
+html.qarip-stories .leto-face-group button{
+  min-width:40px;padding:0 10px;
+}
+html.qarip-stories .leto-face-group .tb-bold span{font-weight:800}
+html.qarip-stories .leto-face-group .tb-italic span{font-style:italic;font-weight:700}
+html.qarip-stories .leto-face-row{
+  display:flex;gap:8px;margin:0 0 16px;
+}
+html.qarip-stories .leto-face-row button{
+  flex:1;min-height:48px;border:0;border-radius:14px;background:#2a2a33;color:#ddd;
+  font:700 12px/1 Arial,sans-serif;cursor:pointer;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:4px;
+}
+html.qarip-stories .leto-face-row button span{font-size:18px;line-height:1}
+html.qarip-stories .leto-face-row .tb-bold span{font-weight:800}
+html.qarip-stories .leto-face-row .tb-italic span{font-style:italic;font-weight:700}
+html.qarip-stories .leto-face-row button.active{background:var(--leto-yellow);color:#111}
+html.qarip-stories .leto-bg-current{
+  display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:10px 12px;
+  border-radius:16px;background:#ffffff0c;border:1px solid var(--leto-line);
+}
+html.qarip-stories .leto-bg-thumb{
+  width:52px;height:72px;flex:0 0 auto;border-radius:10px;background:#222 center/cover no-repeat;
+}
+html.qarip-stories .leto-bg-current-meta{flex:1;min-width:0}
+html.qarip-stories .leto-bg-current-meta b{display:block;font:800 13px/1.2 Arial,sans-serif}
+html.qarip-stories .leto-bg-current-meta small{display:block;margin-top:4px;color:var(--leto-muted);font:600 11px/1.2 Arial,sans-serif}
+html.qarip-stories .leto-bg-current [data-bg-clear]{
+  flex:0 0 auto;min-height:40px;padding:0 12px;border:0;border-radius:12px;
+  background:#ff4d8d;color:#fff;font:800 12px/1 Arial,sans-serif;cursor:pointer;
+}
+html.qarip-stories .leto-photo-grid button.is-current{outline:2px solid var(--leto-yellow)}
 
 /* Entry choice: full editor vs quick text-sticker mode */
 html.qarip-stories .leto-choice{

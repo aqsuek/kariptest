@@ -4,7 +4,7 @@
   const STORE = "qarip-stories-editor-v2";
   const FAV_FONTS = "qarip-stories-font-favs";
   const FAV_PAIRS = "qarip-stories-combo-favs";
-  const ASSET_V = "leto18";
+  const ASSET_V = "leto20";
 
   let FONT_DATA = null;
   let fontDataPromise = null;
@@ -267,13 +267,18 @@
     const textbar = document.createElement("div");
     textbar.className = "leto-textbar";
     textbar.innerHTML = `
+      <div class="leto-face-group" role="group" aria-label="Қаріп стилі">
+        <button type="button" data-text-tool="face-regular" title="Қалыпты" aria-label="Қалыпты"><span>Aa</span></button>
+        <button type="button" data-text-tool="face-bold" class="tb-bold" title="Қалың" aria-label="Қалың"><span>Aa</span></button>
+        <button type="button" data-text-tool="face-italic" class="tb-italic" title="Курсив" aria-label="Курсив"><span>Aa</span></button>
+      </div>
       <button type="button" data-text-tool="align-left">Сол</button>
       <button type="button" data-text-tool="align-center" class="active">Орта</button>
       <button type="button" data-text-tool="align-right">Оң</button>
       <button type="button" data-text-tool="size-down">A−</button>
       <button type="button" data-text-tool="size-up">A+</button>
-      <button type="button" data-text-tool="font" class="tb-font">Aa Шрифт</button>
-      <button type="button" data-text-tool="style" class="tb-style">🎨 Түс/Фон</button>
+      <button type="button" data-text-tool="font" class="tb-font">Шрифт</button>
+      <button type="button" data-text-tool="style" class="tb-style">Түс</button>
     `;
     document.body.append(textbar);
 
@@ -340,7 +345,10 @@
         else exportPng({ transparent: state.bg.type === "transparent" });
       }
       if (act === "add") openSheet("add");
-      if (act === "text") openSheet("text");
+      if (act === "text") {
+        showTextbar();
+        openSheet("text");
+      }
       if (act === "layers") openSheet("layers");
       if (act === "more") openSheet("more");
       if (act === "close") closeSheets();
@@ -360,6 +368,10 @@
       }
       if (t === "size-up") state.text.size = Math.min(140, (state.text.size || 100) + 8);
       if (t === "size-down") state.text.size = Math.max(70, (state.text.size || 100) - 8);
+      if (t.startsWith("face-")) {
+        applyFace(t.replace("face-", ""));
+        return;
+      }
       if (t === "style") {
         openSheet("style");
         return;
@@ -373,15 +385,28 @@
       applyLayout();
     });
 
-    // show textbar when selecting text layers
     document.addEventListener(
       "pointerdown",
       (e) => {
-        if (e.target.closest(".sub-hook, .sub-mark, .sub-extra")) textbar.classList.add("on");
-        else if (!e.target.closest(".leto-textbar")) textbar.classList.remove("on");
+        if (e.target.closest(".sub-hook, .sub-mark, .sub-extra")) {
+          showTextbar();
+          return;
+        }
+        if (e.target.closest(".leto-textbar, .leto-sheet, .leto-dock")) return;
+        if (qs(".subtitle-stack [data-selected='1']")) return;
+        textbar.classList.remove("on");
       },
       true
     );
+
+    const stack = qs(".subtitle-stack");
+    if (stack && stack.dataset.faceObserve !== "1") {
+      stack.dataset.faceObserve = "1";
+      new MutationObserver(() => {
+        if (stack.querySelector("[data-selected='1']")) showTextbar();
+        else if (!activeSheet) textbar.classList.remove("on");
+      }).observe(stack, { subtree: true, attributes: true, attributeFilter: ["data-selected"] });
+    }
   }
 
   function renderSheet(id) {
@@ -569,6 +594,24 @@
     `;
   }
 
+  function currentBgPhotoCard() {
+    const isPhoto = state.bg.type === "photo" || state.bg.type === "upload";
+    if (!isPhoto || !state.bg.value) return "";
+    const label =
+      state.bg.type === "upload"
+        ? "Жүктелген фото"
+        : PHOTOS.find((p) => p.src === state.bg.value)?.label || "Фон фотосы";
+    return `
+      <div class="leto-bg-current">
+        <div class="leto-bg-thumb" style="background-image:url('${escapeAttr(state.bg.value)}')"></div>
+        <div class="leto-bg-current-meta">
+          <b>Қазіргі фон</b>
+          <small>${escapeHtml(label)}</small>
+        </div>
+        <button type="button" data-bg-clear>Фонды өшіру</button>
+      </div>`;
+  }
+
   function renderBg() {
     const tabs = [
       ["colors", "Түстер"],
@@ -577,6 +620,7 @@
       ["upload", "Жүктеу"],
       ["transparent", "Мөлдір"],
     ];
+    const current = currentBgPhotoCard();
     let pane = "";
     if (bgTab === "colors") {
       pane = `<div class="leto-swatches">${SOLID.map((c) => `<button type="button" data-solid="${c}" style="background:${c}"></button>`).join("")}
@@ -602,12 +646,13 @@
         <button type="button" data-photo-tag="эстетика">Эстетика</button>
         <button type="button" data-photo-tag="бренд">Бренд</button>
       </div>
+      <p class="leto-hint">Басқа фотоны басыңыз — фон ауысады.</p>
       <div class="leto-photo-grid" data-photo-grid>
-        ${PHOTOS.map((p) => `<button type="button" data-photo="${p.id}" data-tags="${p.tags.join(" ")}" style="background-image:url('${p.src}')"><span>${p.label}</span></button>`).join("")}
+        ${PHOTOS.map((p) => `<button type="button" data-photo="${p.id}" data-tags="${p.tags.join(" ")}" class="${state.bg.type === "photo" && state.bg.value === p.src ? "is-current" : ""}" style="background-image:url('${p.src}')"><span>${p.label}</span></button>`).join("")}
       </div>`;
     } else if (bgTab === "upload") {
-      pane = `<label class="leto-file">Фон суретін жүктеу<input type="file" accept="image/*" data-bg-upload></label>
-        <p class="leto-hint">Cover режимінде орналасады.</p>`;
+      pane = `<label class="leto-file">${state.bg.type === "upload" ? "Басқа сурет жүктеу" : "Фон суретін жүктеу"}<input type="file" accept="image/*" data-bg-upload></label>
+        <p class="leto-hint">${state.bg.type === "upload" ? "Жаңа файл ескі фонды ауыстырады." : "Cover режимінде орналасады."}</p>`;
     } else {
       pane = `<p class="leto-hint">Мөлдір фон — PNG экспортында фонсыз шығады. Алдын ала қарауда checkerboard көрінеді.</p>
         <button type="button" data-transparent="1" style="min-height:44px;width:100%;border:0;border-radius:14px;background:#2a2a33;color:#fff;font:800 13px/1 Arial,sans-serif">Мөлдір қосу</button>`;
@@ -616,6 +661,7 @@
       <div class="leto-chips" data-bg-tabs>
         ${tabs.map(([id, label]) => `<button type="button" data-bg-tab="${id}" class="${bgTab === id ? "active" : ""}">${label}</button>`).join("")}
       </div>
+      ${current}
       ${pane}
     `;
   }
@@ -718,6 +764,58 @@
     return { stack, el, key };
   }
 
+  function currentFace() {
+    const native = qs(".text-color-tools [data-face].active");
+    if (native?.dataset.face) return native.dataset.face;
+    const { el } = selectedLayerInfo();
+    if (!el) return "regular";
+    const style = getComputedStyle(el);
+    if (style.fontStyle === "italic" || style.fontStyle === "oblique") return "italic";
+    if (parseInt(style.fontWeight, 10) >= 600) return "bold";
+    return "regular";
+  }
+
+  function syncTextbarFace() {
+    const face = currentFace();
+    qsa(".leto-textbar [data-text-tool^='face-']").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.textTool === `face-${face}`);
+    });
+    qsa(".leto-face-row [data-face]").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.face === face);
+    });
+  }
+
+  function showTextbar() {
+    qs(".leto-textbar")?.classList.add("on");
+    syncTextbarFace();
+  }
+
+  function applyFace(face) {
+    const key = selectedLayerInfo().key;
+    const native = qs(`.text-layer-picks [data-layer="${key}"]`);
+    if (native && !native.classList.contains("active")) native.click();
+    const btn = qs(`.text-color-tools [data-face="${face}"]`);
+    if (btn) btn.click();
+    else {
+      const { el } = selectedLayerInfo();
+      if (el) {
+        if (face === "regular") {
+          el.style.setProperty("font-weight", "400", "important");
+          el.style.setProperty("font-style", "normal", "important");
+        } else if (face === "bold") {
+          el.style.setProperty("font-weight", "800", "important");
+          el.style.setProperty("font-style", "normal", "important");
+        } else {
+          el.style.setProperty("font-weight", "700", "important");
+          el.style.setProperty("font-style", "italic", "important");
+        }
+      }
+    }
+    syncTextbarFace();
+    pushHistory();
+    save();
+  }
+
   function setNative(name, value) {
     const input = qs(`.text-color-tools [data-native="${name}"]`);
     if (!input) return;
@@ -734,8 +832,16 @@
     const hasBg = !!bg && bg !== "transparent" && alpha > 0.03;
     const radiusPx = cs ? parseFloat(cs.borderRadius) || 0 : 0;
     const trackingPx = cs ? parseFloat(cs.letterSpacing) || 0 : 0;
+    const face = currentFace();
     return `
       <p class="leto-style-tag">Таңдалған қабат: <b>${TEXT_LAYER_LABEL[key] || key}</b></p>
+
+      <p class="leto-style-label">Қаріп стилі</p>
+      <div class="leto-face-row" role="group" aria-label="Қаріп стилі">
+        <button type="button" data-face="regular" class="${face === "regular" ? "active" : ""}"><span>Aa</span> Қалыпты</button>
+        <button type="button" data-face="bold" class="tb-bold ${face === "bold" ? "active" : ""}"><span>Aa</span> Қалың</button>
+        <button type="button" data-face="italic" class="tb-italic ${face === "italic" ? "active" : ""}"><span>Aa</span> Курсив</button>
+      </div>
 
       <p class="leto-style-label">Мәтін түсі</p>
       <div class="leto-swatches">
@@ -948,6 +1054,7 @@
         pushHistory();
         save();
         applyBackground();
+        renderSheet("bg");
         return;
       }
       const photoTag = e.target.closest("[data-photo-tag]");
@@ -966,11 +1073,12 @@
         applyBackground();
         return;
       }
-      if (e.target.closest("[data-transparent]")) {
+      if (e.target.closest("[data-transparent]") || e.target.closest("[data-bg-clear]")) {
         state.bg = { ...state.bg, type: "transparent", value: "" };
         pushHistory();
         save();
         applyBackground();
+        renderSheet("bg");
         return;
       }
 
@@ -1014,6 +1122,13 @@
         if (m === "share") qsa(".reels-act").find((b) => /Бөлісу|Көшірілді/i.test(b.textContent || ""))?.click();
         if (m === "sticker") qs(".reels-sticker")?.click();
         closeSheets();
+      }
+
+      const faceBtn = e.target.closest(".leto-face-row [data-face]");
+      if (faceBtn) {
+        applyFace(faceBtn.dataset.face);
+        renderSheet("style");
+        return;
       }
 
       const styleTextColor = e.target.closest("[data-style-text-color]");
@@ -1095,7 +1210,7 @@
           pushHistory();
           save();
           applyBackground();
-          closeSheets();
+          renderSheet("bg");
         };
         reader.readAsDataURL(file);
       }
