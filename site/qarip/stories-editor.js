@@ -1,10 +1,12 @@
 (() => {
   if (!/\/qarip\/(stories|reels)\/?$/.test(location.pathname)) return;
+  if (window.__qaripStoriesLeto) return;
+  window.__qaripStoriesLeto = 1;
 
   const STORE = "qarip-stories-editor-v2";
   const FAV_FONTS = "qarip-stories-font-favs";
   const FAV_PAIRS = "qarip-stories-combo-favs";
-  const ASSET_V = "leto20";
+  const ASSET_V = "leto22";
 
   let FONT_DATA = null;
   let fontDataPromise = null;
@@ -24,14 +26,17 @@
   }
 
   const fontFaceCache = new Map();
-  function ensureFontFace(family, url) {
+  function ensureFontFace(family, url, descriptors = {}) {
     if (!family || !url || typeof FontFace === "undefined") return Promise.resolve(null);
-    if (fontFaceCache.has(family)) return fontFaceCache.get(family);
+    const weight = String(descriptors.weight || "400");
+    const style = descriptors.style || "normal";
+    const key = `${family}|${url}|${weight}|${style}`;
+    if (fontFaceCache.has(key)) return fontFaceCache.get(key);
     const ext = (url.split(".").pop() || "").toLowerCase();
     const fmt = ext === "otf" ? "opentype" : ext === "woff2" ? "woff2" : ext === "woff" ? "woff" : "truetype";
     let face;
     try {
-      face = new FontFace(family, `url("${url}") format("${fmt}")`);
+      face = new FontFace(family, `url("${url}") format("${fmt}")`, { weight, style });
     } catch {
       return Promise.resolve(null);
     }
@@ -42,7 +47,7 @@
         return loaded;
       })
       .catch(() => null);
-    fontFaceCache.set(family, p);
+    fontFaceCache.set(key, p);
     return p;
   }
 
@@ -58,7 +63,7 @@
   function observeFontCards(container) {
     const run = (btn) => loadPreviewFont(btn.dataset.fontFamily || "", btn.dataset.fontUrl);
     if (typeof IntersectionObserver === "undefined") {
-      qsa(".leto-font-grid button[data-font-url]", container).forEach(run);
+    qsa(".leto-font-grid button[data-font-url], .leto-weight-grid button[data-font-url]", container).forEach(run);
       return;
     }
     if (fontCardObserver) fontCardObserver.disconnect();
@@ -72,7 +77,7 @@
       },
       { root: container, rootMargin: "300px 0px" }
     );
-    qsa(".leto-font-grid button[data-font-url]", container).forEach((btn) => fontCardObserver.observe(btn));
+    qsa(".leto-font-grid button[data-font-url], .leto-weight-grid button[data-font-url]", container).forEach((btn) => fontCardObserver.observe(btn));
   }
 
   function fontCategoryOf(styleText, categoryText) {
@@ -127,6 +132,7 @@
     customGrad: { from: "#0b1020", to: "#ff4d8d", angle: 160 },
     stickers: [],
     lastPair: "",
+    lastFontName: "",
   });
 
   let state = defaultState();
@@ -152,7 +158,13 @@
   let fontCat = "all";
   let fontQuery = "";
   let pairGroup = "all";
-  let bgTab = "colors";
+  let bgTab = "photos";
+  let fontWeightStep = null;
+  const DEFAULT_FACES = [
+    { id: "regular", label: "Қалыпты", weight: "400", style: "normal" },
+    { id: "bold", label: "Қалың", weight: "700", style: "normal" },
+    { id: "italic", label: "Курсив", weight: "400", style: "italic" },
+  ];
 
   function qs(sel, root = document) {
     return root.querySelector(sel);
@@ -231,10 +243,7 @@
           <button type="button" class="leto-icon" data-acto="undo" aria-label="Болдырмау">${ICO.undo}</button>
           <button type="button" class="leto-icon" data-acto="redo" aria-label="Қайталау">${ICO.redo}</button>
         </div>
-        <div class="leto-top-right">
-          <button type="button" class="leto-icon" data-acto="more" aria-label="Тағы">${ICO.more}</button>
-          <button type="button" class="leto-export" data-acto="export" aria-label="Экспорт">↑</button>
-        </div>
+        <button type="button" class="leto-export" data-acto="export" aria-label="Жүктеу">Жүктеу</button>
       </div>
       <div class="leto-stage"></div>
     `;
@@ -257,9 +266,9 @@
     const dock = document.createElement("div");
     dock.className = "leto-dock";
     dock.innerHTML = `
-      <button type="button" class="leto-text-btn" data-acto="text" aria-label="Мәтін">Aa</button>
-      <button type="button" class="leto-add" data-acto="add"><div class="plus">+</div><span>Қосу</span></button>
-      <button type="button" class="leto-layers-btn" data-acto="layers" aria-label="Қабаттар">${ICO.layers}</button>
+      <button type="button" class="leto-dock-btn" data-acto="text">Мәтін</button>
+      <button type="button" class="leto-dock-btn" data-acto="fonts">Қаріп</button>
+      <button type="button" class="leto-dock-btn" data-acto="bg">Фон</button>
     `;
     document.body.append(dock);
 
@@ -267,17 +276,10 @@
     const textbar = document.createElement("div");
     textbar.className = "leto-textbar";
     textbar.innerHTML = `
-      <div class="leto-face-group" role="group" aria-label="Қаріп стилі">
-        <button type="button" data-text-tool="face-regular" title="Қалыпты" aria-label="Қалыпты"><span>Aa</span></button>
-        <button type="button" data-text-tool="face-bold" class="tb-bold" title="Қалың" aria-label="Қалың"><span>Aa</span></button>
-        <button type="button" data-text-tool="face-italic" class="tb-italic" title="Курсив" aria-label="Курсив"><span>Aa</span></button>
-      </div>
-      <button type="button" data-text-tool="align-left">Сол</button>
-      <button type="button" data-text-tool="align-center" class="active">Орта</button>
-      <button type="button" data-text-tool="align-right">Оң</button>
+      <div class="leto-face-group" hidden role="group" aria-label="Қаріп қалыңдығы"></div>
       <button type="button" data-text-tool="size-down">A−</button>
       <button type="button" data-text-tool="size-up">A+</button>
-      <button type="button" data-text-tool="font" class="tb-font">Шрифт</button>
+      <button type="button" data-text-tool="font" class="tb-font">Қаріп</button>
       <button type="button" data-text-tool="style" class="tb-style">Түс</button>
     `;
     document.body.append(textbar);
@@ -316,6 +318,11 @@
     qs(".leto-scrim")?.classList.add("on");
     qsa(".leto-sheet").forEach((el) => el.classList.toggle("on", el.dataset.sheet === id));
     renderSheet(id);
+    if (id === "fonts") {
+      loadFontData().then(() => {
+        if (activeSheet === "fonts") renderSheet("fonts");
+      });
+    }
   }
   function closeSheets() {
     activeSheet = "";
@@ -330,26 +337,23 @@
       if (!btn) return;
       const act = btn.dataset.acto;
       if (act === "back") {
-        const choice = qs(".leto-choice");
-        if (choice && choice.classList.contains("done")) {
-          closeSheets();
-          choice.classList.remove("done");
-        } else {
-          location.href = "/qarip/";
-        }
+        location.href = "/qarip/";
+        return;
       }
       if (act === "undo") restoreHistory(-1);
       if (act === "redo") restoreHistory(1);
       if (act === "export") {
-        if (quickMode) copyStickerNative();
-        else exportPng({ transparent: state.bg.type === "transparent" });
+        exportPng({ transparent: state.bg.type === "transparent" });
       }
-      if (act === "add") openSheet("add");
       if (act === "text") {
         showTextbar();
         openSheet("text");
       }
-      if (act === "layers") openSheet("layers");
+      if (act === "fonts") {
+        fontWeightStep = null;
+        openSheet("fonts");
+      }
+      if (act === "bg") openSheet("bg");
       if (act === "more") openSheet("more");
       if (act === "close") closeSheets();
     };
@@ -377,6 +381,7 @@
         return;
       }
       if (t === "font") {
+        fontWeightStep = null;
         openSheet("fonts");
         return;
       }
@@ -415,16 +420,16 @@
     const title = sheet.querySelector("h3");
     const body = sheet.querySelector(".leto-sheet-body");
     const titles = {
-      add: "Қабат қосу",
+      add: "Қосу",
       text: "Мәтін",
-      fonts: "Шрифттер",
+      fonts: "Қаріп",
       pairs: "Қаріп жұптары",
-      bg: "Фондар",
+      bg: "Фон",
       stickers: "Стикерлер",
-      gallery: "Галерея",
+      gallery: "Сурет",
       layers: "Қабаттар",
       more: "Тағы",
-      style: "Мәтін түсі мен фоны",
+      style: "Түс",
       layout: "Макет",
     };
     title.textContent = titles[id] || "";
@@ -497,6 +502,7 @@
         family: f.family,
         cat: fontCategoryOf(f.style, f.category),
         url: f.preview,
+        faces: Array.isArray(f.faces) ? f.faces : [],
       }));
     }
     const seen = new Set();
@@ -512,7 +518,13 @@
       const fallback = (FONT_DATA || []).find((f) => f.name === name);
       const row = rec || fallback;
       const url = row?.preview || "";
-      fonts.push({ name, family, cat: fontCategoryOf(style, row?.category || ""), url });
+      fonts.push({
+        name,
+        family,
+        cat: fontCategoryOf(style, row?.category || ""),
+        url,
+        faces: Array.isArray(row?.faces) ? row.faces : [],
+      });
     });
     // fallback from pair families if catalog hidden empty
     if (!fonts.length) {
@@ -523,38 +535,111 @@
     return fonts;
   }
 
+  function recByName(name) {
+    return (
+      (FONT_DATA || []).find((f) => f.name === name) ||
+      catalogFonts().find((f) => f.name === name) ||
+      null
+    );
+  }
+
+  function facesOf(rec) {
+    if (rec?.faces?.length) return rec.faces;
+    return DEFAULT_FACES;
+  }
+
+  function recForSelected() {
+    const { el } = selectedLayerInfo();
+    const fam = String(el ? el.style.fontFamily || getComputedStyle(el).fontFamily : "")
+      .replace(/["']/g, "")
+      .split(",")[0]
+      .trim();
+    const byFam = fam
+      ? (FONT_DATA || []).find((f) => String(f.family || "").replace(/["']/g, "") === fam)
+      : null;
+    return byFam || recByName(state.lastFontName || "");
+  }
+
+  function loadFontFaces(rec) {
+    if (!rec) return Promise.resolve();
+    const fam = String(rec.family || "").replace(/["']/g, "").split(",")[0].trim();
+    const src = rec.preview || "";
+    if (src.startsWith("google:") || rec.source === "google") {
+      return ensureGoogleFont(src.startsWith("google:") ? src.slice(7) || fam : fam);
+    }
+    const faces = rec.faces?.length ? rec.faces : src ? [{ url: src, weight: "400", style: "normal" }] : [];
+    return Promise.all(faces.filter((f) => f.url).map((f) => ensureFontFace(fam, f.url, { weight: f.weight, style: f.style || "normal" })));
+  }
+
+  function syncNativeFaceButtons(faces) {
+    const row = qs(".text-color-tools .text-face-row");
+    if (!row) return;
+    row.innerHTML = `<span>СТИЛЬ</span>${faces
+      .map((f) => `<button type="button" data-face="${escapeAttr(f.id)}">${escapeHtml(f.label)}</button>`)
+      .join("")}`;
+  }
+
+  function paintFaceGroup() {
+    const rec = recForSelected();
+    const custom = rec?.faces?.length > 1;
+    const faces = custom ? rec.faces : DEFAULT_FACES;
+    const group = qs(".leto-face-group");
+    if (group) {
+      if (!custom) {
+        group.hidden = true;
+        group.innerHTML = "";
+      } else {
+        group.hidden = false;
+        group.innerHTML = faces
+          .map((f) => {
+            const cls = f.style === "italic" ? "tb-italic" : Number(f.weight) >= 700 ? "tb-bold" : "";
+            return `<button type="button" data-text-tool="face-${escapeAttr(f.id)}" class="${cls}" title="${escapeAttr(f.label)}" aria-label="${escapeAttr(f.label)}"><span>${escapeHtml(f.label)}</span></button>`;
+          })
+          .join("");
+      }
+    }
+    syncNativeFaceButtons(faces);
+    syncTextbarFace();
+  }
+
   function renderFonts() {
-    const cats = [
-      ["all", "Барлығы"],
-      ["fav", "♥"],
-      ["serif", "Сериф"],
-      ["sans", "Санс"],
-      ["display", "Дисплей"],
-      ["script", "Қолжазба"],
-    ];
+    if (fontWeightStep) {
+      const rec = fontWeightStep;
+      const fam = String(rec.family || "").replace(/["']/g, "").split(",")[0].trim();
+      const cuts = rec.faces?.length ? rec.faces : [];
+      return `
+        <button type="button" class="leto-weight-back" data-font-weight-back>← Қаріптер</button>
+        <p class="leto-style-tag"><b>${escapeHtml(rec.name)}</b> — қалыңдығын басыңыз</p>
+        <div class="leto-weight-grid">
+          ${cuts
+            .map((f) => {
+              const url = f.url || rec.preview || "";
+              return `<button type="button" data-font-cut="${escapeAttr(f.id)}" data-font-name="${escapeAttr(rec.name)}" data-font-family="${encodeURIComponent(rec.family)}" ${url ? `data-font-url="${escapeAttr(url)}"` : ""}>
+                <span class="wc-glyph" style="font-family:'${escapeAttr(fam)}';font-weight:${escapeAttr(String(f.weight || 400))};font-style:${escapeAttr(f.style || "normal")}">Әә</span>
+                <b>${escapeHtml(f.label)}</b>
+              </button>`;
+            })
+            .join("")}
+        </div>
+      `;
+    }
     let fonts = catalogFonts();
-    if (fontCat === "fav") fonts = fonts.filter((f) => fontFavs.includes(f.name));
-    else if (fontCat !== "all") fonts = fonts.filter((f) => f.cat === fontCat);
     if (fontQuery) {
       const q = fontQuery.toLowerCase();
       fonts = fonts.filter((f) => f.name.toLowerCase().includes(q));
     }
-    const { key: selKey } = selectedLayerInfo();
     return `
-      <p class="leto-style-tag">Қаріп қолданылады: <b>${TEXT_LAYER_LABEL[selKey] || selKey}</b> мәтініне</p>
-      <div class="leto-chips" data-font-cats>
-        ${cats.map(([id, label]) => `<button type="button" data-font-cat="${id}" class="${fontCat === id ? "active" : ""}">${label}</button>`).join("")}
-      </div>
+      <p class="leto-style-tag">Қаріпті басыңыз. Кейбіреуінде Thin / Bold бар.</p>
       <input class="leto-search" data-font-search type="search" placeholder="Қаріп іздеу..." value="${fontQuery.replace(/"/g, "&quot;")}">
       <div class="leto-font-grid">
         ${fonts
-          .slice(0, 60)
+          .slice(0, 80)
           .map((f) => {
-            const on = fontFavs.includes(f.name);
-            return `<button type="button" data-font-name="${escapeAttr(f.name)}" data-font-family="${encodeURIComponent(f.family)}" ${f.url ? `data-font-url="${escapeAttr(f.url)}"` : ""}>
+            const cuts = f.faces?.length || 0;
+            return `<button type="button" data-font-name="${escapeAttr(f.name)}" data-font-family="${encodeURIComponent(f.family)}" ${f.url ? `data-font-url="${escapeAttr(f.url)}"` : ""} ${cuts > 1 ? `data-font-cuts="${cuts}"` : ""}>
               <span class="fc-glyph" style="font-family:${escapeAttr(f.family)}">Aa</span>
               <b style="font-family:${escapeAttr(f.family)}">${escapeHtml(f.name)}</b>
-              <span class="heart ${on ? "on" : ""}" data-fav-font="${escapeAttr(f.name)}">${on ? "♥" : "♡"}</span>
+              ${cuts > 1 ? `<small class="fc-cuts">${cuts} нұсқа</small>` : ""}
             </button>`;
           })
           .join("") || '<p class="leto-hint">Қаріп табылмады</p>'}
@@ -614,11 +699,9 @@
 
   function renderBg() {
     const tabs = [
-      ["colors", "Түстер"],
-      ["grads", "Градиент"],
       ["photos", "Фото"],
-      ["upload", "Жүктеу"],
-      ["transparent", "Мөлдір"],
+      ["colors", "Түс"],
+      ["upload", "Өз сурет"],
     ];
     const current = currentBgPhotoCard();
     let pane = "";
@@ -680,7 +763,7 @@
     `;
   }
 
-  const TEXT_LAYER_LABEL = { hook: "Акцент", mark: "Қосымша", extra: "Жаңа мәтін" };
+  const TEXT_LAYER_LABEL = { hook: "Негізгі", mark: "Екінші", extra: "Үшінші" };
 
   function textInputEls() {
     const editor = qs(".reels-copy-edit");
@@ -701,7 +784,7 @@
       return `<p class="leto-hint">Мәтін қабаттарын табу мүмкін болмады. Бетті жаңартып көріңіз.</p>`;
     }
     return `
-      <p class="leto-hint">Түртіп теріңіз — canvas-та бірден өзгереді. Ретімен қосылады: Акцент → Қосымша → Жаңа мәтін.</p>
+      <p class="leto-hint">Осы жерге жазыңыз — Stories-та бірден көрінеді.</p>
       <div class="leto-text-list">
         ${active
           .map(
@@ -710,9 +793,7 @@
             <div class="row-head">
               <b>${TEXT_LAYER_LABEL[key] || key}</b>
               <div class="row-actions">
-                <button type="button" class="row-font" data-font-layer="${key}">Aa Шрифт</button>
-                <button type="button" class="row-style" data-style-layer="${key}">🎨 Стиль</button>
-                ${active.length > 1 ? `<button type="button" class="row-remove" data-remove-layer="${key}">Өшіру ×</button>` : ""}
+                ${active.length > 1 ? `<button type="button" class="row-remove" data-remove-layer="${key}">Өшіру</button>` : ""}
               </div>
             </div>
             <div class="row-slot" data-slot="${key}"></div>
@@ -722,9 +803,10 @@
       </div>
       ${
         canAdd
-          ? `<button type="button" class="leto-text-add" data-native-add-text>+ Жаңа мәтін қосу</button>`
-          : `<p class="leto-hint">Барлық мәтін орны қолданылды (макс 3).</p>`
+          ? `<button type="button" class="leto-text-add" data-native-add-text>+ Тағы бір жол</button>`
+          : ""
       }
+      <button type="button" class="leto-text-sticker" data-more="sticker">Мәтінді стикер етіп көшіру</button>
     `;
   }
 
@@ -770,9 +852,24 @@
     const { el } = selectedLayerInfo();
     if (!el) return "regular";
     const style = getComputedStyle(el);
-    if (style.fontStyle === "italic" || style.fontStyle === "oblique") return "italic";
-    if (parseInt(style.fontWeight, 10) >= 600) return "bold";
-    return "regular";
+    const rec = recForSelected();
+    const cuts = rec?.faces?.length ? rec.faces : DEFAULT_FACES;
+    if (style.fontStyle === "italic" || style.fontStyle === "oblique") {
+      const ital = cuts.find((f) => (f.style || "normal") === "italic");
+      if (ital) return ital.id;
+    }
+    const w = parseInt(style.fontWeight, 10) || 400;
+    let best = cuts[0];
+    let dist = 9999;
+    cuts.forEach((f) => {
+      if ((f.style || "normal") === "italic") return;
+      const d = Math.abs(Number(f.weight || 400) - w);
+      if (d < dist) {
+        dist = d;
+        best = f;
+      }
+    });
+    return best?.id || "regular";
   }
 
   function syncTextbarFace() {
@@ -787,28 +884,23 @@
 
   function showTextbar() {
     qs(".leto-textbar")?.classList.add("on");
-    syncTextbarFace();
+    paintFaceGroup();
   }
 
   function applyFace(face) {
     const key = selectedLayerInfo().key;
-    const native = qs(`.text-layer-picks [data-layer="${key}"]`);
-    if (native && !native.classList.contains("active")) native.click();
+    const nativeLayer = qs(`.text-layer-picks [data-layer="${key}"]`);
+    if (nativeLayer && !nativeLayer.classList.contains("active")) nativeLayer.click();
+    paintFaceGroup();
     const btn = qs(`.text-color-tools [data-face="${face}"]`);
     if (btn) btn.click();
     else {
+      const rec = recForSelected();
+      const cut = facesOf(rec).find((f) => f.id === face);
       const { el } = selectedLayerInfo();
-      if (el) {
-        if (face === "regular") {
-          el.style.setProperty("font-weight", "400", "important");
-          el.style.setProperty("font-style", "normal", "important");
-        } else if (face === "bold") {
-          el.style.setProperty("font-weight", "800", "important");
-          el.style.setProperty("font-style", "normal", "important");
-        } else {
-          el.style.setProperty("font-weight", "700", "important");
-          el.style.setProperty("font-style", "italic", "important");
-        }
+      if (el && cut) {
+        el.style.setProperty("font-weight", String(cut.weight || 400), "important");
+        el.style.setProperty("font-style", cut.style || "normal", "important");
       }
     }
     syncTextbarFace();
@@ -824,54 +916,39 @@
   }
 
   function renderStyleSheet() {
-    const { el, key } = selectedLayerInfo();
+    const { el } = selectedLayerInfo();
     const cs = el ? getComputedStyle(el) : null;
     const bg = cs?.backgroundColor || "";
     const rgbaMatch = bg.match(/^rgba\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*,\s*([\d.]+)\s*\)$/);
     const alpha = rgbaMatch ? parseFloat(rgbaMatch[1]) : bg.startsWith("rgb(") ? 1 : bg && bg !== "transparent" ? 1 : 0;
     const hasBg = !!bg && bg !== "transparent" && alpha > 0.03;
-    const radiusPx = cs ? parseFloat(cs.borderRadius) || 0 : 0;
-    const trackingPx = cs ? parseFloat(cs.letterSpacing) || 0 : 0;
     const face = currentFace();
+    const rec = recForSelected();
+    const cuts = rec?.faces?.length > 1 ? rec.faces : [];
     return `
-      <p class="leto-style-tag">Таңдалған қабат: <b>${TEXT_LAYER_LABEL[key] || key}</b></p>
-
-      <p class="leto-style-label">Қаріп стилі</p>
-      <div class="leto-face-row" role="group" aria-label="Қаріп стилі">
-        <button type="button" data-face="regular" class="${face === "regular" ? "active" : ""}"><span>Aa</span> Қалыпты</button>
-        <button type="button" data-face="bold" class="tb-bold ${face === "bold" ? "active" : ""}"><span>Aa</span> Қалың</button>
-        <button type="button" data-face="italic" class="tb-italic ${face === "italic" ? "active" : ""}"><span>Aa</span> Курсив</button>
-      </div>
-
       <p class="leto-style-label">Мәтін түсі</p>
       <div class="leto-swatches">
         ${SOLID.map((c) => `<button type="button" data-style-text-color="${c}" style="background:${c}" aria-label="${c}"></button>`).join("")}
       </div>
-
-      <p class="leto-style-label">Әріп аралығы (interval)</p>
-      <div class="leto-style-range-row">
-        <input type="range" data-style-tracking min="-4" max="16" step="0.5" value="${trackingPx}">
-        <span class="leto-style-val" data-style-tracking-val>${trackingPx}px</span>
-      </div>
-
+      ${
+        cuts.length
+          ? `<p class="leto-style-label">Қалыңдық</p>
+      <div class="leto-face-row" role="group" aria-label="Қаріп қалыңдығы">
+        ${cuts
+          .map((f) => {
+            const cls = f.style === "italic" ? "tb-italic" : Number(f.weight) >= 700 ? "tb-bold" : "";
+            return `<button type="button" data-face="${escapeAttr(f.id)}" class="${cls} ${face === f.id ? "active" : ""}"><span>${escapeHtml(f.label)}</span></button>`;
+          })
+          .join("")}
+      </div>`
+          : ""
+      }
       <div class="leto-style-row-head">
-        <p class="leto-style-label">Мәтін фоны (пилл)</p>
-        <button type="button" class="leto-style-bgoff${!hasBg ? " active" : ""}" data-style-bg-off>Фонсыз</button>
+        <p class="leto-style-label">Мәтін асты</p>
+        <button type="button" class="leto-style-bgoff${!hasBg ? " active" : ""}" data-style-bg-off>Жоқ</button>
       </div>
       <div class="leto-swatches">
         ${SOLID.map((c) => `<button type="button" data-style-bg-color="${c}" style="background:${c}" aria-label="${c}"></button>`).join("")}
-      </div>
-
-      <p class="leto-style-label${!hasBg ? " disabled" : ""}">Мөлдірлік (transparency)</p>
-      <div class="leto-style-range-row">
-        <input type="range" data-style-bg-opacity min="0" max="1" step="0.05" value="${hasBg ? alpha : 1}" ${!hasBg ? "disabled" : ""}>
-        <span class="leto-style-val" data-style-opacity-val>${Math.round((hasBg ? alpha : 1) * 100)}%</span>
-      </div>
-
-      <p class="leto-style-label${!hasBg ? " disabled" : ""}">Дөңгелектену (rounding)</p>
-      <div class="leto-style-range-row">
-        <input type="range" data-style-bg-radius min="0" max="60" step="2" value="${hasBg ? Math.min(60, radiusPx) : 24}" ${!hasBg ? "disabled" : ""}>
-        <span class="leto-style-val" data-style-radius-val>${hasBg ? Math.min(60, Math.round(radiusPx)) : 24}px</span>
       </div>
     `;
   }
@@ -989,14 +1066,44 @@
         return;
       }
       const fontBtn = e.target.closest("[data-font-name]");
-      if (fontBtn && !e.target.closest("[data-fav-font]")) {
-        applyFont(decodeURIComponent(fontBtn.dataset.fontFamily), fontBtn.dataset.fontName, fontBtn.dataset.fontUrl);
+      if (fontBtn && !e.target.closest("[data-fav-font]") && !e.target.closest("[data-font-cut]")) {
+        const name = fontBtn.dataset.fontName;
+        const rec = recByName(name);
+        if (rec?.faces?.length > 1) {
+          fontWeightStep = rec;
+          renderSheet("fonts");
+          loadFontFaces(rec);
+          return;
+        }
+        fontWeightStep = null;
+        state.lastFontName = name;
+        applyFont(decodeURIComponent(fontBtn.dataset.fontFamily), name, fontBtn.dataset.fontUrl);
+        paintFaceGroup();
         closeSheets();
+        showTextbar();
+        return;
+      }
+      if (e.target.closest("[data-font-weight-back]")) {
+        fontWeightStep = null;
+        renderSheet("fonts");
+        return;
+      }
+      const cutBtn = e.target.closest("[data-font-cut]");
+      if (cutBtn) {
+        const rec = recByName(cutBtn.dataset.fontName) || fontWeightStep;
+        const cutId = cutBtn.dataset.fontCut;
+        const cut = facesOf(rec).find((f) => f.id === cutId);
+        state.lastFontName = cutBtn.dataset.fontName;
+        fontWeightStep = null;
+        applyFont(decodeURIComponent(cutBtn.dataset.fontFamily), cutBtn.dataset.fontName, cut?.url || cutBtn.dataset.fontUrl, cutId);
+        closeSheets();
+        showTextbar();
         return;
       }
       const fontCatBtn = e.target.closest("[data-font-cat]");
       if (fontCatBtn) {
         fontCat = fontCatBtn.dataset.fontCat;
+        fontWeightStep = null;
         renderSheet("fonts");
         return;
       }
@@ -1264,37 +1371,28 @@
     return document.fonts?.load ? document.fonts.load(`24px "${fam}"`) : Promise.resolve();
   }
 
-  function applyFont(family, name, url) {
+  function applyFont(family, name, url, faceId) {
     const rec = (FONT_DATA || []).find((f) => f.name === name);
     const src = url || rec?.preview || "";
-    const fam = String(family || "").replace(/^["']|["']$/g, "").split(",")[0].trim();
+    const fam = String(family || rec?.family || "").replace(/["']/g, "").split(",")[0].trim();
+    state.lastFontName = name || state.lastFontName;
     const paint = () => {
       const item = qsa(".reels-font-item").find((el) => el.dataset.name === name);
       if (item) {
         item.click();
-        return;
+      } else {
+        const stack = qs(".subtitle-stack");
+        const selected =
+          stack?.querySelector('[data-selected="1"]') ||
+          stack?.querySelector(".sub-hook");
+        if (selected) {
+          selected.style.setProperty("font-family", `"${fam}"`, "important");
+        }
       }
-      const stack = qs(".subtitle-stack");
-      const selected =
-        stack?.querySelector('[data-selected="1"]') ||
-        stack?.querySelector(".sub-hook");
-      if (selected) {
-        selected.style.setProperty("font-family", `"${fam}"`, "important");
-      }
+      paintFaceGroup();
+      if (faceId) applyFace(faceId);
     };
-    if (src.startsWith("google:")) {
-      ensureGoogleFont(src.slice(7) || fam).then(paint);
-      return;
-    }
-    if (src && !src.startsWith("http")) {
-      ensureFontFace(fam, src).then(paint);
-      return;
-    }
-    if (src.startsWith("https://fonts.googleapis.com")) {
-      ensureGoogleFont(fam).then(paint);
-      return;
-    }
-    paint();
+    loadFontFaces(rec || { family: fam, preview: src, faces: src && !src.startsWith("google:") ? [{ url: src, weight: "400", style: "normal" }] : [] }).then(paint);
   }
 
   function ensureBg(preview) {
@@ -1551,80 +1649,17 @@
   function updateExportButtonForMode() {
     const btn = qs(".leto-export");
     if (!btn) return;
-    if (quickMode) {
-      btn.textContent = "⧉";
-      btn.setAttribute("aria-label", "Стикер етіп көшіру");
-      btn.classList.add("is-sticker");
-    } else {
-      btn.textContent = "↑";
-      btn.setAttribute("aria-label", "Экспорт");
-      btn.classList.remove("is-sticker");
-    }
-  }
-
-  function renderChoiceHome() {
-    return `
-      <button type="button" class="leto-choice-back" data-choice-back aria-label="Артқа">←</button>
-      <div class="leto-choice-head">
-        <p class="leto-choice-eyebrow">QARIP STORIES</p>
-        <h1>Не істейміз?</h1>
-        <p class="leto-choice-sub">Толық фонымен дайын сурет жасайсың ба, әлде тек мәтін стикерін көшіріп аласың ба?</p>
-      </div>
-      <div class="leto-choice-cards">
-        <button type="button" class="leto-choice-card" data-choice="editor">
-          <span class="cc-ico">🎨</span>
-          <span class="cc-body">
-            <b>Stories жасап көру</b>
-            <small>Мәтін, қаріп, фон, лого қосып, дайын 9:16 сурет жасаңыз</small>
-          </span>
-          <span class="cc-arrow">→</span>
-        </button>
-        <button type="button" class="leto-choice-card" data-choice="sticker">
-          <span class="cc-ico">🏷️</span>
-          <span class="cc-body">
-            <b>Мәтін стикерін жасау</b>
-            <small>Қаріп таңда, мәтінді жаз, өлшемін реттеп PNG стикер ретінде көшіріп ал</small>
-          </span>
-          <span class="cc-arrow">→</span>
-        </button>
-      </div>
-    `;
+    btn.textContent = "Жүктеу";
+    btn.setAttribute("aria-label", "Жүктеу");
+    btn.classList.remove("is-sticker");
   }
 
   function ensureChoice() {
-    let choice = qs(".leto-choice");
-    if (choice) {
-      markLetoReady();
-      return choice;
-    }
-    choice = document.createElement("div");
-    choice.className = "leto-choice";
-    document.body.append(choice);
-    choice.innerHTML = renderChoiceHome();
+    qsa(".leto-choice").forEach((el) => el.remove());
+    quickMode = false;
+    updateExportButtonForMode();
     markLetoReady();
-    choice.addEventListener("click", (e) => {
-      if (e.target.closest("[data-choice-back]")) {
-        location.href = "/qarip/";
-        return;
-      }
-      const editorBtn = e.target.closest('[data-choice="editor"]');
-      if (editorBtn) {
-        quickMode = false;
-        updateExportButtonForMode();
-        choice.classList.add("done");
-        return;
-      }
-      const stickerBtn = e.target.closest('[data-choice="sticker"]');
-      if (stickerBtn) {
-        quickMode = true;
-        updateExportButtonForMode();
-        choice.classList.add("done");
-        openSheet("fonts");
-        letoToast("Қаріп таңда, мәтінді жаз да, жоғарғы батырмамен стикер етіп көшір.");
-        return;
-      }
-    });
-    return choice;
+    return null;
   }
 
   function markLetoReady() {
@@ -1710,14 +1745,17 @@
 
   function start() {
     hideLegacyChrome();
+    markLetoReady();
     let n = 0;
     const tick = () => {
       hideLegacyChrome();
-      if (qs(".phone-preview") && qs(".reels-controls")) {
+      const previewReady = qs(".phone-preview");
+      const engineReady = qs(".reels-controls") || qs(".subtitle-stack");
+      if (previewReady && (engineReady || n > 45)) {
         boot();
         return;
       }
-      if (++n < 90) requestAnimationFrame(tick);
+      if (++n < 180) requestAnimationFrame(tick);
     };
     tick();
     if (!start.observed) {

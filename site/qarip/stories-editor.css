@@ -27,7 +27,8 @@ html.qarip-stories .reels-pick{
 html.qarip-stories .reels-pick:before,
 html.qarip-stories .reels-copy{display:none!important}
 
-/* Hide legacy control chrome — keep in DOM for React */
+/* Hide native dock — one Leto dock only */
+html.qarip-stories .reels-controls,
 html.qarip-stories .stories-editor .reels-controls,
 html.qarip-stories .se-native-controls,
 html.qarip-stories .se-section,
@@ -53,8 +54,9 @@ html.qarip-stories .leto-app{
 }
 html.qarip-stories .leto-topbar{
   display:flex;align-items:center;justify-content:space-between;
-  gap:10px;padding:8px 12px;position:sticky;top:0;z-index:40;
+  gap:8px;padding:8px 10px;position:sticky;top:0;z-index:40;
   background:linear-gradient(180deg,#0a0a0c 70%,transparent);
+  box-sizing:border-box;width:100%;
 }
 html.qarip-stories .leto-topbar .leto-icon,
 html.qarip-stories .leto-fab{
@@ -65,9 +67,10 @@ html.qarip-stories .leto-fab{
 html.qarip-stories .leto-top-center{display:flex;gap:8px}
 html.qarip-stories .leto-top-right{display:flex;gap:8px;align-items:center}
 html.qarip-stories .leto-export{
-  width:44px;height:44px;border:0;border-radius:12px;
+  width:auto;min-width:0;height:40px;padding:0 14px;border:0;border-radius:14px;
   background:var(--leto-yellow);color:#111;display:inline-grid;place-items:center;
   cursor:pointer;box-shadow:0 8px 24px #f5c51844;
+  font:800 13px/1 Arial,sans-serif;flex:0 0 auto;box-sizing:border-box;
 }
 html.qarip-stories .leto-stage{
   flex:1;display:flex;align-items:center;justify-content:center;
@@ -83,6 +86,10 @@ html.qarip-stories .stories-editor-preview{
 html.qarip-stories .stories-editor-panel{display:none!important}
 
 /* 9:16 canvas */
+@media (min-width:900px){
+  html.qarip-stories .leto-app{max-width:560px}
+  html.qarip-stories .stories-editor-preview{width:min(400px,42vw)}
+}
 html.qarip-stories .phone-preview{
   width:100%!important;
   max-width:360px!important;
@@ -124,41 +131,24 @@ html.qarip-stories .phone-preview .leto-sticker{
 html.qarip-stories .phone-preview.exporting .reels-hud,
 html.qarip-stories .phone-preview.exporting .reels-guide{display:none!important}
 
-/* Bottom dock */
+/* Bottom dock — one simple row */
 html.qarip-stories .leto-dock{
-  position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));
+  position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));
   transform:translateX(-50%);z-index:45;
-  display:flex;align-items:flex-end;gap:12px;
-  width:min(420px,92vw);justify-content:center;pointer-events:none;
+  display:flex;align-items:stretch;gap:8px;
+  width:min(420px, calc(100vw - 16px));padding:8px;border-radius:20px;
+  background:#1b1b22ee;backdrop-filter:blur(12px);
+  box-shadow:0 10px 30px #0008;box-sizing:border-box;
 }
-html.qarip-stories .leto-add{
-  pointer-events:auto;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
-  min-width:120px;min-height:64px;padding:8px 18px;
-  border:0;border-radius:22px;cursor:pointer;
-  background:#1b1b22cc;backdrop-filter:blur(12px);color:#fff;
-  box-shadow:0 10px 30px #0008;
+html.qarip-stories .leto-dock-btn{
+  flex:1;min-height:52px;border:0;border-radius:14px;
+  background:#2a2a33;color:#fff;cursor:pointer;
+  font:800 16px/1 Arial,sans-serif;
 }
-html.qarip-stories .leto-add .plus{
-  width:28px;height:28px;border-radius:50%;background:var(--leto-yellow);
-  color:#111;display:grid;place-items:center;font:900 18px/1 Arial,sans-serif;
-}
-html.qarip-stories .leto-add span{font:700 11px/1 Arial,sans-serif;letter-spacing:.04em}
-html.qarip-stories .leto-layers-btn{
-  pointer-events:auto;
-  position:absolute;right:0;bottom:8px;
-  width:44px;height:44px;border:0;border-radius:50%;
-  background:#fff;color:#111;display:grid;place-items:center;cursor:pointer;
-  box-shadow:0 8px 20px #0007;
-}
-html.qarip-stories .leto-text-btn{
-  pointer-events:auto;
-  position:absolute;left:0;bottom:8px;
-  width:44px;height:44px;border:0;border-radius:50%;
-  background:#fff;color:#111;display:grid;place-items:center;cursor:pointer;
-  font:800 15px/1 Arial,sans-serif;
-  box-shadow:0 8px 20px #0007;
-}
+html.qarip-stories .leto-dock-btn:active{background:var(--leto-yellow);color:#111}
+html.qarip-stories .leto-add,
+html.qarip-stories .leto-layers-btn,
+html.qarip-stories .leto-text-btn{display:none!important}
 
 /* Sheets */
 html.qarip-stories .leto-scrim{
@@ -255,6 +245,27 @@ html.qarip-stories .leto-font-grid button b{
   display:block;font-size:12px;font-weight:700;line-height:1.15;max-width:100%;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#c9c9d2;
 }
+html.qarip-stories .leto-font-grid .fc-cuts{
+  display:block;margin-top:2px;color:#f5c518;font:700 10px/1 Arial,sans-serif;letter-spacing:.02em;
+}
+html.qarip-stories .leto-weight-back{
+  display:inline-flex;align-items:center;min-height:40px;margin:0 0 12px;padding:0 12px;
+  border:0;border-radius:12px;background:#2a2a33;color:#fff;font:700 13px/1 Arial,sans-serif;cursor:pointer;
+}
+html.qarip-stories .leto-weight-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+html.qarip-stories .leto-weight-grid button{
+  min-height:110px;border:0;border-radius:16px;background:#2a2a33;color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;
+}
+html.qarip-stories .leto-weight-grid button:active{background:#33333e}
+html.qarip-stories .leto-weight-grid .wc-glyph{
+  font-size:34px;line-height:1;letter-spacing:.02em;
+}
+html.qarip-stories .leto-weight-grid b{font:700 13px/1 Arial,sans-serif;color:#c9c9d2}
+html.qarip-stories .leto-face-group[hidden]{display:none!important}
+html.qarip-stories .leto-face-group button span{font:700 11px/1 Arial,sans-serif;white-space:nowrap}
 html.qarip-stories .leto-font-grid .heart,
 html.qarip-stories .leto-pair-grid .heart{
   position:absolute;right:8px;bottom:8px;width:22px;height:22px;border:0;border-radius:50%;
@@ -366,14 +377,14 @@ html.qarip-stories .leto-layer-list button.active{outline:2px solid var(--leto-y
 html.qarip-stories .leto-textbar{
   position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom));
   transform:translateX(-50%);z-index:46;
-  width:min(420px,94vw);display:none;gap:6px;overflow:auto;
+  width:min(420px,94vw);display:none;gap:8px;overflow:auto;
   padding:8px;border-radius:16px;background:#1b1b22ee;backdrop-filter:blur(10px);
   align-items:center;
 }
 html.qarip-stories .leto-textbar.on{display:flex}
 html.qarip-stories .leto-textbar button{
-  flex:0 0 auto;min-height:36px;padding:0 12px;border:0;border-radius:999px;
-  background:#2f2f38;color:#fff;font:700 12px/1 Arial,sans-serif;cursor:pointer;
+  flex:1 1 auto;min-height:44px;padding:0 12px;border:0;border-radius:12px;
+  background:#2f2f38;color:#fff;font:800 14px/1 Arial,sans-serif;cursor:pointer;
 }
 html.qarip-stories .leto-textbar button.active{background:var(--leto-yellow);color:#111}
 html.qarip-stories .leto-face-group{
@@ -412,14 +423,13 @@ html.qarip-stories .leto-bg-current [data-bg-clear]{
 }
 html.qarip-stories .leto-photo-grid button.is-current{outline:2px solid var(--leto-yellow)}
 
-/* Entry choice: full editor vs quick text-sticker mode */
-html.qarip-stories .leto-choice{
-  position:fixed;inset:0;z-index:400;background:var(--leto-bg);
-  overflow:auto;-webkit-overflow-scrolling:touch;
-  display:flex;flex-direction:column;justify-content:flex-start;
-  padding:max(24px,8vh) 20px calc(24px + env(safe-area-inset-bottom));
-  transition:opacity .2s,visibility .2s;
+html.qarip-stories .leto-text-sticker{
+  width:100%;min-height:44px;margin-top:12px;border:0;border-radius:12px;
+  background:#ffffff10;color:#c9c9d2;font:700 13px/1 Arial,sans-serif;cursor:pointer;
 }
+
+/* Choice overlay retired — editor opens immediately */
+html.qarip-stories .leto-choice{display:none!important}
 html.qarip-stories .leto-choice-back{
   position:fixed;left:12px;top:max(12px,env(safe-area-inset-top));z-index:91;
   width:40px;height:40px;border:0;border-radius:50%;

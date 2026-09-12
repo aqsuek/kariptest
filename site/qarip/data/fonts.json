@@ -37,7 +37,37 @@
       "impactkz"
     ],
     "useCase": "stories",
-    "tags": "stories reels рилс субтитр caption poster condensed"
+    "tags": "stories reels рилс субтитр caption poster condensed",
+    "faces": [
+      {
+        "id": "thin",
+        "label": "Thin",
+        "weight": "100",
+        "style": "normal",
+        "url": "/qarip/fonts/user/bebas-neue-thin.otf"
+      },
+      {
+        "id": "light",
+        "label": "Light",
+        "weight": "300",
+        "style": "normal",
+        "url": "/qarip/fonts/user/bebas-neue-light.otf"
+      },
+      {
+        "id": "regular",
+        "label": "Regular",
+        "weight": "400",
+        "style": "normal",
+        "url": "/qarip/fonts/user/bebas-neue.otf"
+      },
+      {
+        "id": "bold",
+        "label": "Bold",
+        "weight": "700",
+        "style": "normal",
+        "url": "/qarip/fonts/user/bebas-neue-bold.otf"
+      }
+    ]
   },
   {
     "slug": "clickuper",

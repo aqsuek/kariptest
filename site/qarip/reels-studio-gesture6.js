@@ -558,15 +558,20 @@
     const layer = state[key];
     applyBox(el, key);
     if (layer.family) el.style.setProperty("font-family", layer.family, "important");
-    if (layer.face === "regular") {
-      el.style.setProperty("font-weight", "400", "important");
-      el.style.setProperty("font-style", "normal", "important");
-    } else if (layer.face === "bold") {
-      el.style.setProperty("font-weight", "800", "important");
-      el.style.setProperty("font-style", "normal", "important");
-    } else if (layer.face === "italic") {
-      el.style.setProperty("font-weight", "700", "important");
-      el.style.setProperty("font-style", "italic", "important");
+    const FACE_LOOK = {
+      thin: ["100", "normal"],
+      light: ["300", "normal"],
+      regular: ["400", "normal"],
+      medium: ["500", "normal"],
+      semibold: ["600", "normal"],
+      bold: ["700", "normal"],
+      black: ["900", "normal"],
+      italic: ["400", "italic"],
+    };
+    const look = FACE_LOOK[layer.face];
+    if (look) {
+      el.style.setProperty("font-weight", look[0], "important");
+      el.style.setProperty("font-style", look[1], "important");
     }
     if (layer.color) el.style.setProperty("color", layer.color, "important");
     if (layer.letterSpacing != null && layer.letterSpacing !== "") {
@@ -627,9 +632,11 @@
     if (!el) return "regular";
     const style = getComputedStyle(el);
     const italic = style.fontStyle === "italic" || style.fontStyle === "oblique";
-    const bold = parseInt(style.fontWeight, 10) >= 600;
+    const w = parseInt(style.fontWeight, 10) || 400;
     if (italic) return "italic";
-    if (bold) return "bold";
+    if (w <= 150) return "thin";
+    if (w <= 350) return "light";
+    if (w >= 600) return "bold";
     return "regular";
   }
 
@@ -1292,9 +1299,15 @@
     applyLayerLook(stack.querySelector(layerSelector(key)), key);
     if (document.fonts?.load && family) {
       const face = state[key].face;
-      const weight = face === "regular" ? "400" : "700";
-      const style = face === "italic" ? "italic" : "normal";
-      document.fonts.load(`${style} ${weight} 48px ${family}`).catch(() => {}).finally(() => containLayer(stack, key, true));
+      const FACE_LOOK = {
+        thin: ["100", "normal"],
+        light: ["300", "normal"],
+        regular: ["400", "normal"],
+        bold: ["700", "normal"],
+        italic: ["400", "italic"],
+      };
+      const look = FACE_LOOK[face] || ["400", "normal"];
+      document.fonts.load(`${look[1]} ${look[0]} 48px ${family}`).catch(() => {}).finally(() => containLayer(stack, key, true));
     } else {
       containLayer(stack, key, true);
     }
