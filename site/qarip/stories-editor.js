@@ -6,7 +6,7 @@
   const STORE = "qarip-stories-editor-v2";
   const FAV_FONTS = "qarip-stories-font-favs";
   const FAV_PAIRS = "qarip-stories-combo-favs";
-  const ASSET_V = "leto22";
+  const ASSET_V = "leto23";
 
   let FONT_DATA = null;
   let fontDataPromise = null;
@@ -125,7 +125,7 @@
   };
 
   const defaultState = () => ({
-    bg: { type: "transparent", value: "", fit: "cover", posX: 50, posY: 50 },
+    bg: { type: "transparent", value: "", fit: "cover", posX: 50, posY: 50, x: 0, y: 0, scale: 1, rotate: 0 },
     logo: { src: "", pos: "top-right", size: 18, opacity: 100, margin: 8 },
     layout: "center",
     text: { size: 100, align: "center", lineHeight: 100, letterSpacing: 0, maxWidth: 86 },
@@ -159,6 +159,7 @@
   let fontQuery = "";
   let pairGroup = "all";
   let bgTab = "photos";
+  let bgEdit = false;
   let fontWeightStep = null;
   const DEFAULT_FACES = [
     { id: "regular", label: "Қалыпты", weight: "400", style: "normal" },
@@ -318,6 +319,8 @@
     qs(".leto-scrim")?.classList.add("on");
     qsa(".leto-sheet").forEach((el) => el.classList.toggle("on", el.dataset.sheet === id));
     renderSheet(id);
+    if (id === "bg") setBgEdit(hasBgPhoto());
+    else if (id === "text" || id === "fonts" || id === "style" || id === "pairs") setBgEdit(false);
     if (id === "fonts") {
       loadFontData().then(() => {
         if (activeSheet === "fonts") renderSheet("fonts");
@@ -346,10 +349,12 @@
         exportPng({ transparent: state.bg.type === "transparent" });
       }
       if (act === "text") {
+        setBgEdit(false);
         showTextbar();
         openSheet("text");
       }
       if (act === "fonts") {
+        setBgEdit(false);
         fontWeightStep = null;
         openSheet("fonts");
       }
@@ -394,6 +399,7 @@
       "pointerdown",
       (e) => {
         if (e.target.closest(".sub-hook, .sub-mark, .sub-extra")) {
+          setBgEdit(false);
           showTextbar();
           return;
         }
@@ -693,7 +699,10 @@
           <b>Қазіргі фон</b>
           <small>${escapeHtml(label)}</small>
         </div>
-        <button type="button" data-bg-clear>Фонды өшіру</button>
+        <div class="leto-bg-current-actions">
+          <button type="button" data-bg-reset>Қалпына</button>
+          <button type="button" data-bg-clear>Фонды өшіру</button>
+        </div>
       </div>`;
   }
 
@@ -729,13 +738,13 @@
         <button type="button" data-photo-tag="эстетика">Эстетика</button>
         <button type="button" data-photo-tag="бренд">Бренд</button>
       </div>
-      <p class="leto-hint">Басқа фотоны басыңыз — фон ауысады.</p>
+      <p class="leto-hint">Фотоны басыңыз. Сосын канваста жылжытып, үлкейтіп, бұрыңыз.</p>
       <div class="leto-photo-grid" data-photo-grid>
         ${PHOTOS.map((p) => `<button type="button" data-photo="${p.id}" data-tags="${p.tags.join(" ")}" class="${state.bg.type === "photo" && state.bg.value === p.src ? "is-current" : ""}" style="background-image:url('${p.src}')"><span>${p.label}</span></button>`).join("")}
       </div>`;
     } else if (bgTab === "upload") {
       pane = `<label class="leto-file">${state.bg.type === "upload" ? "Басқа сурет жүктеу" : "Фон суретін жүктеу"}<input type="file" accept="image/*" data-bg-upload></label>
-        <p class="leto-hint">${state.bg.type === "upload" ? "Жаңа файл ескі фонды ауыстырады." : "Cover режимінде орналасады."}</p>`;
+        <p class="leto-hint">${state.bg.type === "upload" ? "Жаңа файл ескі фонды ауыстырады." : "Жүктеген соң фотоны жылжытып, үлкейтіп, бұруға болады."}</p>`;
     } else {
       pane = `<p class="leto-hint">Мөлдір фон — PNG экспортында фонсыз шығады. Алдын ала қарауда checkerboard көрінеді.</p>
         <button type="button" data-transparent="1" style="min-height:44px;width:100%;border:0;border-radius:14px;background:#2a2a33;color:#fff;font:800 13px/1 Arial,sans-serif">Мөлдір қосу</button>`;
@@ -883,6 +892,7 @@
   }
 
   function showTextbar() {
+    setBgEdit(false);
     qs(".leto-textbar")?.classList.add("on");
     paintFaceGroup();
   }
@@ -1157,11 +1167,12 @@
       const photo = e.target.closest("[data-photo]");
       if (photo) {
         const p = PHOTOS.find((x) => x.id === photo.dataset.photo);
-        state.bg = { ...state.bg, type: "photo", value: p.src };
+        state.bg = { ...state.bg, type: "photo", value: p.src, x: 0, y: 0, scale: 1, rotate: 0 };
         pushHistory();
         save();
         applyBackground();
-        renderSheet("bg");
+        closeSheets();
+        setBgEdit(true);
         return;
       }
       const photoTag = e.target.closest("[data-photo-tag]");
@@ -1181,11 +1192,16 @@
         return;
       }
       if (e.target.closest("[data-transparent]") || e.target.closest("[data-bg-clear]")) {
-        state.bg = { ...state.bg, type: "transparent", value: "" };
+        state.bg = { ...state.bg, type: "transparent", value: "", x: 0, y: 0, scale: 1, rotate: 0 };
         pushHistory();
         save();
         applyBackground();
+        setBgEdit(false);
         renderSheet("bg");
+        return;
+      }
+      if (e.target.closest("[data-bg-reset]")) {
+        resetBgTransform();
         return;
       }
 
@@ -1313,11 +1329,12 @@
         if (!file) return;
         const reader = new FileReader();
         reader.onload = () => {
-          state.bg = { ...state.bg, type: "upload", value: String(reader.result || ""), fit: "cover" };
+          state.bg = { ...state.bg, type: "upload", value: String(reader.result || ""), fit: "cover", x: 0, y: 0, scale: 1, rotate: 0 };
           pushHistory();
           save();
           applyBackground();
-          renderSheet("bg");
+          closeSheets();
+          setBgEdit(true);
         };
         reader.readAsDataURL(file);
       }
@@ -1395,6 +1412,67 @@
     loadFontFaces(rec || { family: fam, preview: src, faces: src && !src.startsWith("google:") ? [{ url: src, weight: "400", style: "normal" }] : [] }).then(paint);
   }
 
+  function hasBgPhoto() {
+    return (state.bg.type === "photo" || state.bg.type === "upload") && !!state.bg.value;
+  }
+
+  function bgXform() {
+    const b = state.bg || {};
+    const scale = Number(b.scale);
+    return {
+      x: Number(b.x) || 0,
+      y: Number(b.y) || 0,
+      scale: Number.isFinite(scale) && scale > 0 ? scale : 1,
+      rotate: Number(b.rotate) || 0,
+    };
+  }
+
+  function clampBgScale(n) {
+    return Math.max(0.2, Math.min(6, n));
+  }
+
+  function resetBgTransform() {
+    if (!hasBgPhoto()) return;
+    state.bg = { ...state.bg, x: 0, y: 0, scale: 1, rotate: 0 };
+    pushHistory();
+    save();
+    applyBgTransform();
+  }
+
+  function clearTextSelect() {
+    const stack = qs(".subtitle-stack");
+    stack?.querySelectorAll("[data-selected]").forEach((el) => el.removeAttribute("data-selected"));
+    stack?.querySelectorAll("[data-editing='1']").forEach((el) => {
+      el.removeAttribute("data-editing");
+      el.removeAttribute("contenteditable");
+    });
+    const hud = qs(".reels-hud");
+    if (hud) hud.dataset.show = "0";
+    qs(".leto-textbar")?.classList.remove("on");
+  }
+
+  function syncDock(mode) {
+    qsa(".leto-dock-btn").forEach((btn) => {
+      btn.classList.toggle("on", btn.dataset.acto === mode);
+    });
+  }
+
+  function setBgEdit(on) {
+    bgEdit = !!on && hasBgPhoto();
+    const preview = qs(".phone-preview");
+    if (!preview) return;
+    preview.classList.toggle("leto-bg-edit", bgEdit);
+    qs(".leto-scrim")?.classList.toggle("pass-stage", bgEdit);
+    if (bgEdit) {
+      syncDock("bg");
+      clearTextSelect();
+      ensureBgHit(preview);
+    } else {
+      syncDock(activeSheet === "bg" ? "bg" : activeSheet === "fonts" ? "fonts" : activeSheet === "text" ? "text" : "");
+      removeBgChrome(preview);
+    }
+  }
+
   function ensureBg(preview) {
     let bg = qs(".stories-bg", preview);
     if (!bg) {
@@ -1403,6 +1481,197 @@
       preview.insertBefore(bg, preview.firstChild);
     }
     return bg;
+  }
+
+  function ensureBgPhoto(bg) {
+    let img = qs(".stories-bg-photo", bg);
+    if (!img) {
+      img = document.createElement("img");
+      img.className = "stories-bg-photo";
+      img.alt = "";
+      img.draggable = false;
+      img.addEventListener("load", () => sizeBgPhoto(img));
+      bg.append(img);
+    }
+    return img;
+  }
+
+  function sizeBgPhoto(img) {
+    const preview = img.closest(".phone-preview");
+    if (!preview || !img.naturalWidth) return;
+    const box = preview.getBoundingClientRect();
+    if (box.width < 8 || box.height < 8) return;
+    const cover = Math.max(box.width / img.naturalWidth, box.height / img.naturalHeight);
+    img.style.width = `${Math.ceil(img.naturalWidth * cover)}px`;
+    img.style.height = `${Math.ceil(img.naturalHeight * cover)}px`;
+  }
+
+  function applyBgTransform() {
+    const preview = qs(".phone-preview");
+    const img = qs(".stories-bg-photo", preview);
+    if (!img) return;
+    const { x, y, scale, rotate } = bgXform();
+    img.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${rotate}deg) scale(${scale})`;
+  }
+
+  function ensureBgHit(preview) {
+    if (!preview) return;
+    let hit = qs(".stories-bg-hit", preview);
+    if (!hit) {
+      hit = document.createElement("div");
+      hit.className = "stories-bg-hit";
+      preview.append(hit);
+      bindBgGestures(hit);
+    }
+    let tools = qs(".stories-bg-tools", preview);
+    if (!tools) {
+      tools = document.createElement("div");
+      tools.className = "stories-bg-tools";
+      tools.innerHTML = `<span class="stories-bg-hint">Фонды жылжытыңыз</span><button type="button" data-bg-reset>Қалпына</button>`;
+      tools.addEventListener("click", (e) => {
+        if (e.target.closest("[data-bg-reset]")) resetBgTransform();
+      });
+      preview.append(tools);
+    }
+  }
+
+  function removeBgChrome(preview) {
+    qs(".stories-bg-hit", preview)?.remove();
+    qs(".stories-bg-tools", preview)?.remove();
+  }
+
+  function bindBgGestures(hit) {
+    if (hit.dataset.bound === "1") return;
+    hit.dataset.bound = "1";
+    const pointers = new Map();
+    let gesture = null;
+    let dirty = false;
+
+    const lockScroll = () => {
+      if (lockScroll.on) return;
+      lockScroll.on = true;
+      const block = (ev) => {
+        if (ev.cancelable) ev.preventDefault();
+      };
+      const stop = () => {
+        lockScroll.on = false;
+        window.removeEventListener("touchmove", block, true);
+        window.removeEventListener("pointerup", stop, true);
+        window.removeEventListener("pointercancel", stop, true);
+      };
+      window.addEventListener("touchmove", block, { passive: false, capture: true });
+      window.addEventListener("pointerup", stop, { capture: true });
+      window.addEventListener("pointercancel", stop, { capture: true });
+    };
+
+    const pts = () => [...pointers.values()];
+    const commit = () => {
+      if (!dirty) return;
+      dirty = false;
+      pushHistory();
+      save();
+    };
+
+    hit.addEventListener("pointerdown", (e) => {
+      if (!bgEdit || !hasBgPhoto()) return;
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      e.preventDefault();
+      e.stopPropagation();
+      lockScroll();
+      try {
+        hit.setPointerCapture(e.pointerId);
+      } catch {}
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      const now = bgXform();
+      if (pointers.size === 1) {
+        gesture = {
+          mode: e.shiftKey || e.altKey ? "rotate" : "pan",
+          ...now,
+          px: e.clientX,
+          py: e.clientY,
+        };
+      } else if (pointers.size >= 2) {
+        const [a, b] = pts();
+        gesture = {
+          mode: "pinch",
+          ...now,
+          dist: Math.hypot(b.x - a.x, b.y - a.y),
+          ang: Math.atan2(b.y - a.y, b.x - a.x),
+          mx: (a.x + b.x) / 2,
+          my: (a.y + b.y) / 2,
+        };
+      }
+    });
+
+    hit.addEventListener("pointermove", (e) => {
+      if (!pointers.has(e.pointerId) || !gesture) return;
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (gesture.mode === "pan") {
+        state.bg.x = gesture.x + (e.clientX - gesture.px);
+        state.bg.y = gesture.y + (e.clientY - gesture.py);
+      } else if (gesture.mode === "rotate") {
+        const preview = qs(".phone-preview");
+        const r = preview.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const startAng = Math.atan2(gesture.py - cy, gesture.px - cx);
+        const nowAng = Math.atan2(e.clientY - cy, e.clientX - cx);
+        state.bg.rotate = gesture.rotate + ((nowAng - startAng) * 180) / Math.PI;
+      } else if (gesture.mode === "pinch") {
+        const pair = pts();
+        if (pair.length < 2) return;
+        const [a, b] = pair;
+        const dist = Math.hypot(b.x - a.x, b.y - a.y);
+        const ang = Math.atan2(b.y - a.y, b.x - a.x);
+        const mx = (a.x + b.x) / 2;
+        const my = (a.y + b.y) / 2;
+        state.bg.scale = clampBgScale(gesture.scale * (dist / Math.max(12, gesture.dist)));
+        state.bg.rotate = gesture.rotate + ((ang - gesture.ang) * 180) / Math.PI;
+        state.bg.x = gesture.x + (mx - gesture.mx);
+        state.bg.y = gesture.y + (my - gesture.my);
+      }
+      dirty = true;
+      applyBgTransform();
+    });
+
+    const endPointer = (e) => {
+      pointers.delete(e.pointerId);
+      if (pointers.size === 0) {
+        gesture = null;
+        commit();
+      } else if (pointers.size === 1) {
+        const only = pts()[0];
+        const now = bgXform();
+        gesture = { mode: "pan", ...now, px: only.x, py: only.y };
+      }
+    };
+    hit.addEventListener("pointerup", endPointer);
+    hit.addEventListener("pointercancel", endPointer);
+
+    hit.addEventListener(
+      "wheel",
+      (e) => {
+        if (!bgEdit || !hasBgPhoto()) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const factor = e.deltaY > 0 ? 0.94 : 1.06;
+        const prev = bgXform();
+        const nextScale = clampBgScale(prev.scale * factor);
+        const k = nextScale / (prev.scale || 1);
+        const preview = qs(".phone-preview");
+        const r = preview.getBoundingClientRect();
+        const lx = e.clientX - (r.left + r.width / 2) - prev.x;
+        const ly = e.clientY - (r.top + r.height / 2) - prev.y;
+        state.bg.scale = nextScale;
+        state.bg.x = prev.x + lx - lx * k;
+        state.bg.y = prev.y + ly - ly * k;
+        applyBgTransform();
+        dirty = true;
+        clearTimeout(hit._wheelSave);
+        hit._wheelSave = setTimeout(commit, 280);
+      },
+      { passive: false }
+    );
   }
   function ensureLogo(preview) {
     let logo = qs(".stories-logo", preview);
@@ -1422,21 +1691,34 @@
     const bg = ensureBg(preview);
     const b = state.bg;
     preview.dataset.bg = b.type;
-    bg.style.backgroundPosition = `${b.posX || 50}% ${b.posY || 50}%`;
-    bg.style.backgroundSize = b.fit || "cover";
+    bg.style.backgroundPosition = "";
+    bg.style.backgroundSize = "";
+    const photoOn = b.type === "photo" || b.type === "upload";
     if (b.type === "solid") {
       bg.style.backgroundImage = "none";
       bg.style.backgroundColor = b.value || "#101014";
     } else if (b.type === "gradient") {
       bg.style.backgroundColor = "transparent";
       bg.style.backgroundImage = b.value;
-    } else if (b.type === "photo" || b.type === "upload") {
+    } else if (photoOn) {
       bg.style.backgroundColor = "#101014";
-      bg.style.backgroundImage = b.value ? `url("${b.value}")` : "none";
+      bg.style.backgroundImage = "none";
     } else {
       bg.style.backgroundColor = "transparent";
       bg.style.backgroundImage = "";
     }
+    const img = photoOn && b.value ? ensureBgPhoto(bg) : qs(".stories-bg-photo", bg);
+    if (photoOn && b.value && img) {
+      img.hidden = false;
+      if (img.getAttribute("src") !== b.value) img.src = b.value;
+      else sizeBgPhoto(img);
+      applyBgTransform();
+    } else if (img) {
+      img.hidden = true;
+      img.removeAttribute("src");
+    }
+    if (bgEdit && !hasBgPhoto()) setBgEdit(false);
+    else if (bgEdit) ensureBgHit(preview);
   }
 
   function applyLogo() {
@@ -1574,6 +1856,8 @@
     if (!preview) return;
     const force = transparent || state.bg.type === "transparent";
     preview.classList.add("exporting");
+    qs(".stories-bg-hit", preview)?.setAttribute("hidden", "");
+    qs(".stories-bg-tools", preview)?.setAttribute("hidden", "");
     if (force) {
       preview.dataset.bg = "transparent";
       const bg = qs(".stories-bg", preview);
@@ -1596,6 +1880,8 @@
       qsa(".reels-act").find((b) => /9:16|PNG/i.test(b.textContent || ""))?.click();
     } finally {
       preview.classList.remove("exporting");
+      qs(".stories-bg-hit", preview)?.removeAttribute("hidden");
+      qs(".stories-bg-tools", preview)?.removeAttribute("hidden");
       applyBackground();
     }
   }
@@ -1692,6 +1978,13 @@
     ensureBg(nodes.preview);
     ensureLogo(nodes.preview);
     applyAll();
+    if (nodes.preview.dataset.bgResize !== "1") {
+      nodes.preview.dataset.bgResize = "1";
+      new ResizeObserver(() => {
+        const img = qs(".stories-bg-photo", nodes.preview);
+        if (img && !img.hidden) sizeBgPhoto(img);
+      }).observe(nodes.preview);
+    }
     if (!history.length) pushHistory();
     ensureChoice();
     markLetoReady();

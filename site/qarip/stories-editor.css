@@ -102,9 +102,37 @@ html.qarip-stories .phone-preview{
   overflow:hidden!important;
 }
 html.qarip-stories .phone-preview .stories-bg{
-  position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:#121216 center/cover no-repeat;
+  position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:#121216;
 }
+html.qarip-stories .phone-preview .stories-bg-photo{
+  position:absolute;left:50%;top:50%;
+  max-width:none;max-height:none;
+  transform-origin:center center;
+  pointer-events:none;user-select:none;-webkit-user-drag:none;
+  will-change:transform;
+}
+html.qarip-stories .phone-preview .stories-bg-hit{
+  position:absolute;inset:0;z-index:18;touch-action:none;cursor:grab;
+}
+html.qarip-stories .phone-preview .stories-bg-hit:active{cursor:grabbing}
+html.qarip-stories .phone-preview .stories-bg-tools{
+  position:absolute;left:50%;bottom:14px;z-index:19;
+  transform:translateX(-50%);
+  display:flex;align-items:center;gap:8px;
+  pointer-events:none;
+}
+html.qarip-stories .phone-preview .stories-bg-hint{
+  padding:7px 12px;border-radius:999px;
+  background:#0009;color:#fff;font:700 12px/1 Arial,sans-serif;
+  white-space:nowrap;backdrop-filter:blur(8px);
+}
+html.qarip-stories .phone-preview .stories-bg-tools [data-bg-reset]{
+  pointer-events:auto;min-height:32px;padding:0 12px;border:0;border-radius:999px;
+  background:#ffffff18;color:#fff;font:800 12px/1 Arial,sans-serif;cursor:pointer;
+}
+html.qarip-stories .phone-preview.exporting .stories-bg-hit,
+html.qarip-stories .phone-preview.exporting .stories-bg-tools{display:none!important}
 html.qarip-stories .phone-preview[data-bg="transparent"],
 html.qarip-stories .phone-preview[data-bg="transparent"] .stories-bg{
   background-color:transparent!important;
@@ -145,7 +173,9 @@ html.qarip-stories .leto-dock-btn{
   background:#2a2a33;color:#fff;cursor:pointer;
   font:800 16px/1 Arial,sans-serif;
 }
-html.qarip-stories .leto-dock-btn:active{background:var(--leto-yellow);color:#111}
+html.qarip-stories .leto-dock-btn:active,
+html.qarip-stories .leto-dock-btn.on{background:var(--leto-yellow);color:#111}
+html.qarip-stories .leto-scrim.on.pass-stage{pointer-events:none}
 html.qarip-stories .leto-add,
 html.qarip-stories .leto-layers-btn,
 html.qarip-stories .leto-text-btn{display:none!important}
@@ -410,16 +440,22 @@ html.qarip-stories .leto-face-row button.active{background:var(--leto-yellow);co
 html.qarip-stories .leto-bg-current{
   display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:10px 12px;
   border-radius:16px;background:#ffffff0c;border:1px solid var(--leto-line);
+  flex-wrap:wrap;
 }
+html.qarip-stories .leto-bg-current-actions{display:flex;gap:6px;flex:0 0 auto}
 html.qarip-stories .leto-bg-thumb{
   width:52px;height:72px;flex:0 0 auto;border-radius:10px;background:#222 center/cover no-repeat;
 }
 html.qarip-stories .leto-bg-current-meta{flex:1;min-width:0}
 html.qarip-stories .leto-bg-current-meta b{display:block;font:800 13px/1.2 Arial,sans-serif}
 html.qarip-stories .leto-bg-current-meta small{display:block;margin-top:4px;color:var(--leto-muted);font:600 11px/1.2 Arial,sans-serif}
-html.qarip-stories .leto-bg-current [data-bg-clear]{
+html.qarip-stories .leto-bg-current [data-bg-clear],
+html.qarip-stories .leto-bg-current [data-bg-reset]{
   flex:0 0 auto;min-height:40px;padding:0 12px;border:0;border-radius:12px;
   background:#ff4d8d;color:#fff;font:800 12px/1 Arial,sans-serif;cursor:pointer;
+}
+html.qarip-stories .leto-bg-current [data-bg-reset]{
+  background:#2a2a33;color:#fff;
 }
 html.qarip-stories .leto-photo-grid button.is-current{outline:2px solid var(--leto-yellow)}
 
