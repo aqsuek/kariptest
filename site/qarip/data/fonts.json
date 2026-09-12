@@ -19,6 +19,27 @@
     ]
   },
   {
+    "slug": "bebas-neue",
+    "name": "Bebas Neue",
+    "maker": "Dharma Type",
+    "author": "Dharma Type",
+    "style": "Дисплей",
+    "category": "Display",
+    "family": "Local Bebas Neue",
+    "download": "/qarip/downloads/bebas-neue.zip",
+    "preview": "/qarip/fonts/user/bebas-neue.otf",
+    "license": "open",
+    "local": true,
+    "similar": [
+      "dela-gothic-one",
+      "kz-facon",
+      "kz-fighting-words",
+      "impactkz"
+    ],
+    "useCase": "stories",
+    "tags": "stories reels рилс субтитр caption poster condensed"
+  },
+  {
     "slug": "clickuper",
     "name": "Clickuper",
     "maker": "Жеке жинақ",

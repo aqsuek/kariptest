@@ -318,7 +318,11 @@
       const family = rec?.family || card.querySelector(".font-preview")?.style.fontFamily || "";
       card.dataset.family = family.replace(/^["']|["']$/g, "");
       if (rec?.preview) card.dataset.preview = rec.preview;
-      if (rec?.download) card.dataset.download = rec.download;
+      if (rec?.download) {
+        card.dataset.download = rec.download;
+        const dl = card.querySelector(".card-bottom a[download], .card-bottom a[aria-label$='жүктеу']");
+        if (dl && rec.download.startsWith("/")) dl.setAttribute("href", rec.download);
+      }
       const license = card.querySelector(".meta > span:last-child");
       if (license) {
         license.title = Q?.licenseInfo(licenseKey).title || "";
@@ -424,7 +428,10 @@
     });
     const count = document.querySelector(".workspace-heading .count");
     if (count) {
-      count.textContent = `${Math.min(matching.length, visibleLimit)} / ${matching.length} қаріп`;
+      const shown = Math.min(matching.length, visibleLimit);
+      count.textContent =
+        shown === matching.length ? `${matching.length} қаріп` : `${shown} / ${matching.length} қаріп`;
+      count.dataset.qaripCount = "1";
     }
     renderMoreButton(matching);
     renderEmpty(matching);

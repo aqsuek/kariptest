@@ -402,6 +402,14 @@
         "Қазақ әріптерін қолдайтын қаріптерді тексеріп, өз мәтініңізбен көріп және жүктеп алыңыз.";
       wrap.append(lead);
     }
+    const count = document.querySelector(".workspace-heading .count");
+    if (count && !count.dataset.qaripCount) {
+      const n = document.querySelectorAll(".font-grid > .font-card").length;
+      if (n) {
+        count.textContent = `${n} қаріп`;
+        count.dataset.qaripCount = "1";
+      }
+    }
   }
 
   function polishGeneratorCopy() {
